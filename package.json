@@ -9,17 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yandex-praktikum/middle.messenger.praktikum.yandex.git"
+    "url": "git+https://github.com/Wononi/middle.messenger.praktikum.yandex.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yandex-praktikum/middle.messenger.praktikum.yandex/issues"
+    "url": "https://github.com/Wononi/middle.messenger.praktikum.yandex/issues"
   },
   "dependencies": {
+    "handlebars": "^4.7.7"
+  },
+  "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
     "express": "^4.18.2",
-    "handlebars": "^4.7.7",
     "parcel": "^2.8.3"
   }
 }
