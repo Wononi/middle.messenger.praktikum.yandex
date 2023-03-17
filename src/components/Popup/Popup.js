@@ -32,7 +32,7 @@ const Popup = (type, title, btn ) => {
     <div class="popup">
         <div class="popup__wrapper">
             <h4>${title}</h4>
-            <a href="#">Выбрать файл<br>на компьютере</a>
+            <input type="file" name="avatar">
             <button>${btn}</button>
         </div>
     </div>

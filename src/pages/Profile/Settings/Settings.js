@@ -23,7 +23,7 @@ const Settings = () => {
                 </svg>
             </div>
             <h3>Иван</h3>
-            ${profileData.item.map(i => ProfileItem(i.name, i.value, i.type)).join('')}
+            ${profileData.item.map(i => ProfileItem(i.name, i.value, i.type, i.apiName)).join('')}
             <a href="/profile" class="profile__content-change__data">
                Сохранить
             </a>

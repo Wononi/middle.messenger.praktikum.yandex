@@ -1,7 +1,6 @@
 import App  from './App';
 import './style/index.scss'
 
-console.log('hi')
 
 const root = document.querySelector('#root');
 

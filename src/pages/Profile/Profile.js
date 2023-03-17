@@ -8,49 +8,58 @@ export const profileData = {
     {
       name: 'Почта',
       value: 'pochta@yandex.ru',
-      type: 'email'
+      type: 'email',
+      apiName: 'email'
     },
     {
       name: 'Логин',
       value: 'ivanivanov',
-      type: 'text'
+      type: 'text',
+      apiName: 'login'
     },
     {
       name: 'Имя',
       value: 'Иван',
-      type: 'text'
+      type: 'text',
+      apiName: 'first_name'
     },
     {
       name: 'Фамилия',
       value: 'Иванов',
-      type: 'text'
+      type: 'text',
+      apiName: 'second_name'
     },
     {
       name: 'Имя в чате',
       value: 'Иван',
-      type: 'text'
+      type: 'text',
+      apiName: 'display_name'
     },
     {
       name: 'Телефон',
       value: '+7 (909) 967 30 30',
-      type: 'tel'
+      type: 'tel',
+      apiName: 'phone'
     },
   ],
   passwordData: [
     {
       name: 'Старый пароль',
       password: '123qwe',
-      type: 'password'
+      type: 'password',
+      apiName: 'oldPassword'
     },
     {
       name: 'Новый пароль',
       password: '',
-      type: 'password'
+      type: 'password',
+      apiName: 'newPassword'
     },
     {
       name: 'Повторите новый пароль',
       password: '',
-      type: 'password'
+      type: 'password',
+      apiName: 'newPassword'
     },
   ]
 }

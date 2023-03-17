@@ -1,11 +1,11 @@
 import Handlebars from 'handlebars';
 
-const ProfileItem = (name, value, type) => {
+const ProfileItem = (name, value, type, apiName) => {
   if (window.location.pathname === '/profile/user-data') {
     return Handlebars.compile(`
     <div class="profile__content-item">
         <p>${name}</p>
-        <input type="${type}" value="${value}">
+        <input type="${type}" value="${value}" name="${apiName}">
     </div>
   `)()
   }
@@ -13,7 +13,7 @@ const ProfileItem = (name, value, type) => {
     return Handlebars.compile(`
     <div class="profile__content-item">
         <p>${name}</p>
-        <input type="${type}" value="${value}">
+        <input type="${type}" value="${value}" name="${apiName}">
     </div>
   `)()
   }
