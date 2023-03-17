@@ -85,7 +85,7 @@ const Profile = () => {
             <a href="/profile/user-password" class="profile__content-change__data">
                 Изменить пароль
             </a>
-            <a href="/" class="signout">
+            <a href="/signin" class="signout">
                 Выйти
             </a>
         </div>

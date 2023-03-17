@@ -6,11 +6,14 @@ import Settings from "./pages/Profile/Settings/Settings";
 import Password from "./pages/Profile/Password/Password";
 import notFound from "./pages/notFound/notFound";
 import Error from "./pages/Error/Error";
+import Navigation from "./pages/Navigation/Navigation";
 
 
 const App = () => {
   switch (window.location.pathname) {
     case '/':
+      return Navigation();
+    case '/signin':
       return SignIn();
     case '/signup':
       return SignUp();
@@ -26,7 +29,7 @@ const App = () => {
       return Password();
     case '/500':
       return Error();
-    default:
+    case '/404':
       return notFound()
   }
 };
