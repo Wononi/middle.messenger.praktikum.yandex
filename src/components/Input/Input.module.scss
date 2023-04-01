@@ -1,0 +1,13 @@
+input {
+  background: #FFFFFF;
+  border: 1px solid #BDBDBD;
+  border-radius: 50px;
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.invalid {
+  border: 1px solid red;
+}

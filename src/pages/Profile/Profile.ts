@@ -1,45 +1,45 @@
 import Handlebars from 'handlebars';
-import './profile.scss'
-import ProfileItem from "./ProfileItem";
-import Popup from "../../components/Popup/Popup";
+import './profile.scss';
+import profileItem from './ProfileItem';
+import popup from '../../components/Popup/Popup';
 
-export const profileData = {
+export const profileData: object = {
   item: [
     {
       name: 'Почта',
       value: 'pochta@yandex.ru',
       type: 'email',
-      apiName: 'email'
+      apiName: 'email',
     },
     {
       name: 'Логин',
       value: 'ivanivanov',
       type: 'text',
-      apiName: 'login'
+      apiName: 'login',
     },
     {
       name: 'Имя',
       value: 'Иван',
       type: 'text',
-      apiName: 'first_name'
+      apiName: 'first_name',
     },
     {
       name: 'Фамилия',
       value: 'Иванов',
       type: 'text',
-      apiName: 'second_name'
+      apiName: 'second_name',
     },
     {
       name: 'Имя в чате',
       value: 'Иван',
       type: 'text',
-      apiName: 'display_name'
+      apiName: 'display_name',
     },
     {
       name: 'Телефон',
       value: '+7 (909) 967 30 30',
       type: 'tel',
-      apiName: 'phone'
+      apiName: 'phone',
     },
   ],
   passwordData: [
@@ -47,28 +47,28 @@ export const profileData = {
       name: 'Старый пароль',
       password: '123qwe',
       type: 'password',
-      apiName: 'oldPassword'
+      apiName: 'oldPassword',
     },
     {
       name: 'Новый пароль',
       password: '',
       type: 'password',
-      apiName: 'newPassword'
+      apiName: 'newPassword',
     },
     {
       name: 'Повторите новый пароль',
       password: '',
       type: 'password',
-      apiName: 'newPassword'
+      apiName: 'newPassword',
     },
-  ]
-}
+  ],
+};
 
 const Profile = () => {
   return Handlebars.compile(`
     
     <div class="profile">
-        ${Popup('avatar', 'Загрузите файл', 'Поменять')}
+        ${popup('avatar', 'Загрузите файл', 'Поменять')}
         <div class="profile__sidebar">
             <a href="/home">
               <svg width="55" height="55" viewBox="0 0 55 55" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +87,7 @@ const Profile = () => {
                 </svg>
             </div>
             <h3>Иван</h3>
-            ${profileData.item.map(i => ProfileItem(i.name, i.value)).join('')}
+            ${profileData.item.map((i) => profileItem(i.name, i.value)).join('')}
             <a href="/profile/user-data" class="profile__content-change__data">
                 Изменить данные
             </a>
@@ -99,7 +99,7 @@ const Profile = () => {
             </a>
         </div>
     </div>
-  `)()
-}
+  `)();
+};
 
-export default Profile
+export default Profile;

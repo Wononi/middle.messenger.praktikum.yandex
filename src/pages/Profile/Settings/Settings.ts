@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
-import ProfileItem from "../ProfileItem";
-import {profileData} from "../Profile";
+import profileItem from '../ProfileItem';
+import {profileData} from '../Profile';
 
 const Settings = () => {
   return Handlebars.compile(`
@@ -23,13 +23,13 @@ const Settings = () => {
                 </svg>
             </div>
             <h3>Иван</h3>
-            ${profileData.item.map(i => ProfileItem(i.name, i.value, i.type, i.apiName)).join('')}
+            ${profileData.item.map((i) => profileItem(i.name, i.value, i.type, i.apiName)).join('')}
             <a href="/profile" class="profile__content-change__data">
                Сохранить
             </a>
         </div>
     </div>
-  `)()
-}
+  `)();
+};
 
-export default Settings
+export default Settings;

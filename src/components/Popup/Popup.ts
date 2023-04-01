@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
-import './popup.scss'
+import './popup.scss';
 
 const Popup = (type, title, btn ) => {
-  if (type === "delete") {
+  if (type === 'delete') {
     return Handlebars.compile(`
     <div class="popup">
       <div class="popup__wrapper">
@@ -12,10 +12,10 @@ const Popup = (type, title, btn ) => {
         <button class="delete">${btn}</button>
       </div>
     </div>
-  `)()
+  `)();
   }
 
-  if (type !== "avatar") {
+  if (type !== 'avatar') {
     return Handlebars.compile(`
     <div class="popup">
       <div class="popup__wrapper">
@@ -25,7 +25,7 @@ const Popup = (type, title, btn ) => {
         <button>${btn}</button>
       </div>
     </div>
-  `)()
+  `)();
   }
 
   return Handlebars.compile(`
@@ -36,7 +36,7 @@ const Popup = (type, title, btn ) => {
             <button>${btn}</button>
         </div>
     </div>
-  `)()
-}
+  `)();
+};
 
-export default Popup
+export default Popup;

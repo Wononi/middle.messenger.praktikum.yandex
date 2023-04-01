@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
-import {profileData} from "../Profile";
-import ProfileItem from "../ProfileItem";
+import {profileData} from '../Profile';
+import profileItem from '../ProfileItem';
 
 const Password = () => {
   return Handlebars.compile(`
@@ -23,13 +23,13 @@ const Password = () => {
                   </svg>
               </div>
               <h3>Иван</h3>
-              ${profileData.passwordData.map(i => ProfileItem(i.name, i.password, i.type, i.apiName)).join('')}
+              ${profileData.passwordData.map((i) => profileItem(i.name, i.password, i.type, i.apiName)).join('')}
               <a href="/profile" class="profile__content-change__data">
                  Сохранить
               </a>
           </div>
       </div>
-  `)()
-}
+  `)();
+};
 
-export default Password
+export default Password;

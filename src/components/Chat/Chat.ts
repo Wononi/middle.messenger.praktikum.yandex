@@ -1,8 +1,7 @@
 import Handlebars from 'handlebars';
-import './Chat.scss'
-import Popup from "../Popup/Popup";
-const Chat = () => {
-  return Handlebars.compile(`
+import './Chat.scss';
+
+const Chat = () => Handlebars.compile(`
     <div class="chat">
         <div class="chat__header">
             <img src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png" alt="profile">
@@ -82,7 +81,6 @@ const Chat = () => {
             </div>
         </div>
     </div>
-  `)()
-}
+  `)();
 
-export default Chat
+export default Chat;

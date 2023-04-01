@@ -8,16 +8,5 @@ nav {
     flex-direction: column;
     align-items: center;
     row-gap: 10px;
-
-    li {
-      list-style: none;
-      width: max-content;
-
-      a {
-        color: #000000;
-        font-size: 18px;
-        line-height: 20px;
-      }
-    }
   }
 }

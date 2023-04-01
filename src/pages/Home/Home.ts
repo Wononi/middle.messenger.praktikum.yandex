@@ -1,10 +1,10 @@
 import Handlebars from 'handlebars';
-import './home.scss'
-import ChatItem from "./ChatItem/ChatItem";
-import Popup from "../../components/Popup/Popup";
-import Chat from "../../components/Chat/Chat";
+import './home.scss';
+import chatItem from './ChatItem/ChatItem';
+import popup from '../../components/Popup/Popup';
+import chat from '../../components/Chat/Chat';
 
-let data = {
+const data: object = {
   profiles: [
     {
       img: 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png',
@@ -12,16 +12,16 @@ let data = {
       message: 'Привет',
       time: '10:50',
       missMessage: 2,
-    }
-  ]
-}
+    },
+  ],
+};
 
 const Home = () => {
   return Handlebars.compile(`
     <div class="home">
-        ${Popup('', 'Добавить пользователя', 'Добавить')}
+        ${popup('', 'Добавить пользователя', 'Добавить')}
         <div id="delete" style="display: none; position: absolute; width: 100%; height: 100%;">
-            ${Popup('delete', 'Удалить пользователя', 'Удалить')}
+            ${popup('delete', 'Удалить пользователя', 'Удалить')}
         </div>
         <div class="home__sidebar">
             <a href="/profile" class="home__sidebar-item">
@@ -49,14 +49,14 @@ const Home = () => {
             <div class="home__chat-list__search">
                 <input type="search" placeholder="Поиск">
             </div>
-            ${data.profiles.map(e => ChatItem(e))}
+            ${data.profiles.map((e) => chatItem(e))}
         </div>
         <div class="home__chat">
-            ${window.location.pathname === '/home'? `<p>Выберите чат, чтобы начать общение</p>` : Chat()}
+            ${window.location.pathname === '/home'? `<p>Выберите чат, чтобы начать общение</p>` : chat()}
         </div>
     </div>
-  `)()
-}
+  `)();
+};
 
-export default Home
+export default Home;
 

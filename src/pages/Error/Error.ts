@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import './error.scss'
+import './error.scss';
 
 const Error = () => {
   return Handlebars.compile(`
@@ -7,7 +7,7 @@ const Error = () => {
         Мы уже решаем проблему<br>500
         <a href="/home">Вернуться на главную</a>
     </div>
-  `)()
-}
+  `)();
+};
 
-export default Error
+export default Error;
