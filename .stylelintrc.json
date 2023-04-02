@@ -9,7 +9,6 @@
     "scss/selector-no-redundant-nesting-selector": true,
     "color-hex-case": "lower"
   },
-  "extends": "stylelint-config-standard",
   "ignoreFiles": [
     "dist/*"
   ]
