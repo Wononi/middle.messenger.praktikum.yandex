@@ -5,6 +5,20 @@ import {ProfileItem} from '../../../components/ProfileItem';
 
 interface SettingsProps {}
 
+const EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+const NAME_REGEXP = /^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$/u;
+const TEL_REGEXP = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+const isEmailValid = (value) => {
+  return EMAIL_REGEXP.test(value);
+};
+const isNameValid = (value) => {
+  return NAME_REGEXP.test(value);
+};
+
+const isTelValid = (value) => {
+  return TEL_REGEXP.test(value);
+};
+
 export class Settings extends Block<SettingsProps> {
   constructor(props: SettingsProps) {
     super('div', props);
@@ -18,6 +32,15 @@ export class Settings extends Block<SettingsProps> {
       inputName: 'email',
       inputType: 'email',
       inputValue: 'pochta@yandex.ru',
+      events: {
+        blur: (e) => {
+          if (isEmailValid(e.target.value)) {
+            console.log('Email корректен');
+          } else {
+            alert('Не подходящий email')
+          }
+        },
+      },
     });
     this.children.login = new ProfileItem({
       isSettings: true,
@@ -25,6 +48,15 @@ export class Settings extends Block<SettingsProps> {
       inputName: 'login',
       inputType: 'text',
       inputValue: 'ivanivanov',
+      events: {
+        blur: (e) => {
+          if (e.target.value < 3 || e.target.value > 20 || !/^[a-zA-z]{1}[a-zA-Z1-9]{3,20}$/.test(e.target.value)) {
+            alert('Логин введен не верно');
+          } else {
+            console.log('Login корректен');
+          }
+        },
+      },
     });
     this.children.firstName = new ProfileItem({
       isSettings: true,
@@ -32,6 +64,15 @@ export class Settings extends Block<SettingsProps> {
       inputName: 'first_name',
       inputType: 'text',
       inputValue: 'Иван',
+      events: {
+        blur: (e) => {
+          if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
+            alert('Имя введено не верно')
+          } else {
+            console.log('Имя корректно');
+          }
+        },
+      },
     });
     this.children.secondName = new ProfileItem({
       isSettings: true,
@@ -39,6 +80,15 @@ export class Settings extends Block<SettingsProps> {
       inputName: 'second_name',
       inputType: 'text',
       inputValue: 'Иванов',
+      events: {
+        blur: (e) => {
+          if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
+            alert('Фамилия введено не верно')
+          } else {
+            console.log('Фамилия корректна');
+          }
+        },
+      },
     });
     this.children.name = new ProfileItem({
       isSettings: true,
@@ -46,6 +96,15 @@ export class Settings extends Block<SettingsProps> {
       inputName: 'display_name',
       inputType: 'text',
       inputValue: 'Иван',
+      events: {
+        blur: (e) => {
+          if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
+            alert('Имя в чате введено не верно')
+          } else {
+            console.log('Имя в чате корректно');
+          }
+        },
+      },
     });
     this.children.phone = new ProfileItem({
       isSettings: true,
@@ -53,6 +112,15 @@ export class Settings extends Block<SettingsProps> {
       inputName: 'phone',
       inputType: 'tel',
       inputValue: '+7 (909) 967 30 30',
+      events: {
+        blur: (e) => {
+          if (isTelValid(e.target.value)) {
+            console.log('Телефон корректен');
+          } else {
+            alert('Телефон введен не верно')
+          }
+        },
+      },
     });
   }
 

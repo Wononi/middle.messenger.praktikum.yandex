@@ -26,7 +26,10 @@ export class Block<P extends Record<string, any> = any> {
   constructor(tagName = 'div', propsWithChildren: P) {
     const eventBus = new EventBus();
 
-    const {props, children} = this._getChildrenAndProps(propsWithChildren);
+    const {
+      props,
+      children,
+    } = this._getChildrenAndProps(propsWithChildren);
 
     this._meta = {
       tagName,
@@ -43,27 +46,41 @@ export class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block>} {
+  _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block> } {
     const props: Record<string, unknown> = {};
     const children: Record<string, Block> = {};
 
-    Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (value instanceof Block) {
-        children[key as string] = value;
-      } else {
-        props[key] = value;
-      }
-    });
+    Object.entries(childrenAndProps)
+      .forEach(([key, value]) => {
+        if (value instanceof Block) {
+          children[key as string] = value;
+        } else {
+          props[key] = value;
+        }
+      });
 
-    return {props: props as P, children};
+    return {
+      props: props as P,
+      children,
+    };
   }
 
   _addEvents() {
     const {events = {}} = this.props as P & { events: Record<string, () => void> };
 
-    Object.keys(events).forEach((eventName) => {
-      this._element?.addEventListener(eventName, events[eventName]);
-    });
+    Object.keys(events)
+      .forEach((eventName) => {
+        this._element?.addEventListener(eventName, events[eventName]);
+      });
+  }
+
+  _removeEvents() {
+    const {events = {}} = this.props as P & { events: Record<string, () => void> };
+
+    Object.keys(events)
+      .forEach((eventName) => {
+        this._element?.removeEventListener(eventName, events[eventName]);
+      });
   }
 
   _registerEvents(eventBus: EventBus) {
@@ -83,26 +100,32 @@ export class Block<P extends Record<string, any> = any> {
 
     this.init();
 
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this.eventBus()
+      .emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  protected init() {}
+  protected init() {
+  }
 
   _componentDidMount() {
     this.componentDidMount();
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   public dispatchComponentDidMount() {
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+    this.eventBus()
+      .emit(Block.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach((child) => child.dispatchComponentDidMount());
+    Object.values(this.children)
+      .forEach((child) => child.dispatchComponentDidMount());
   }
 
   private _componentDidUpdate(oldProps: P, newProps: P) {
     if (this.componentDidUpdate(oldProps, newProps)) {
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+      this.eventBus()
+        .emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
@@ -125,6 +148,8 @@ export class Block<P extends Record<string, any> = any> {
   private _render() {
     const fragment = this.render();
 
+    this._removeEvents();
+
     this._element!.innerHTML = '';
 
     this._element!.append(fragment);
@@ -135,9 +160,10 @@ export class Block<P extends Record<string, any> = any> {
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = {...context};
 
-    Object.entries(this.children).forEach(([name, component]) => {
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-    });
+    Object.entries(this.children)
+      .forEach(([name, component]) => {
+        contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+      });
 
     const html = template(contextAndStubs);
 
@@ -145,17 +171,19 @@ export class Block<P extends Record<string, any> = any> {
 
     temp.innerHTML = html;
 
-    Object.entries(this.children).forEach(([_, component]) => {
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+    Object.entries(this.children)
+      .forEach(([_, component]) => {
+        const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
-      if (!stub) {
-        return;
-      }
+        if (!stub) {
+          return;
+        }
 
-      component.getContent()?.append(...Array.from(stub.childNodes));
+        component.getContent()
+          ?.append(...Array.from(stub.childNodes));
 
-      stub.replaceWith(component.getContent()!);
-    });
+        stub.replaceWith(component.getContent()!);
+      });
 
     return temp.content;
   }
@@ -184,7 +212,8 @@ export class Block<P extends Record<string, any> = any> {
 
         // Запускаем обновление компоненты
         // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        self.eventBus()
+          .emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
       deleteProperty() {

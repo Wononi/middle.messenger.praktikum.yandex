@@ -10,6 +10,9 @@ interface ProfileItemProps {
   inputName?: string;
   inputType?: string;
   inputValue?: string;
+  events?: {
+    blur: (e) => void;
+  };
 }
 
 export class ProfileItem extends Block<ProfileItemProps> {
@@ -22,7 +25,10 @@ export class ProfileItem extends Block<ProfileItemProps> {
     this.children.input = new Input({
       name: this.props.inputName,
       value: this.props.inputValue,
-      type: this.props.inputType
+      type: this.props.inputType,
+      events: {
+        blur: this.props.events.blur
+      },
     })
   }
 
