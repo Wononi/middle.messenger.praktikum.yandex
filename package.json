@@ -17,6 +17,7 @@
     "url": "https://github.com/Wononi/middle.messenger.praktikum.yandex/issues"
   },
   "dependencies": {
+    "eslint": "^8.37.0",
     "handlebars": "^4.7.7",
     "nanoid": "^4.0.2"
   },
