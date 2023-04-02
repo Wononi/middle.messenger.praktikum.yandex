@@ -1,5 +1,5 @@
-import { EventBus } from "./event-bus";
-import { nanoid } from 'nanoid';
+import {EventBus} from './event-bus';
+import {nanoid} from 'nanoid';
 
 // Нельзя создавать экземпляр данного класса
 export class Block<P extends Record<string, any> = any> {
@@ -12,7 +12,7 @@ export class Block<P extends Record<string, any> = any> {
 
   public id = nanoid(6);
   protected props: P;
-  protected children: Record<string, Block>;
+  public children: Record<string, Block>;
   private eventBus: () => EventBus;
   private _element: HTMLElement | null = null;
   private _meta: { tagName: string; props: P; };
@@ -21,7 +21,7 @@ export class Block<P extends Record<string, any> = any> {
    * @param {string} tagName
    * @param {Object} props
    *
-   * @returns {void}
+   * @return {void}
    */
   constructor(tagName = 'div', propsWithChildren: P) {
     const eventBus = new EventBus();
@@ -61,7 +61,7 @@ export class Block<P extends Record<string, any> = any> {
   _addEvents() {
     const {events = {}} = this.props as P & { events: Record<string, () => void> };
 
-    Object.keys(events).forEach(eventName => {
+    Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
@@ -74,7 +74,7 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   _createResources() {
-    const { tagName } = this._meta;
+    const {tagName} = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
 
@@ -97,7 +97,7 @@ export class Block<P extends Record<string, any> = any> {
   public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach(child => child.dispatchComponentDidMount());
+    Object.values(this.children).forEach((child) => child.dispatchComponentDidMount());
   }
 
   private _componentDidUpdate(oldProps: P, newProps: P) {
@@ -175,10 +175,10 @@ export class Block<P extends Record<string, any> = any> {
     return new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop];
-        return typeof value === "function" ? value.bind(target) : value;
+        return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
-        const oldTarget = { ...target }
+        const oldTarget = {...target};
 
         target[prop as keyof P] = value;
 

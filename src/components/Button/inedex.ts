@@ -1,22 +1,29 @@
 import {Block} from '../../utils/Block';
 import Handlebars from 'handlebars';
+import './Button.module.scss';
 
 interface ButtonProps {
   title: string;
-  type: string;
+  type?: string;
 
-  events: {
-    click: (e) => void;
+  events?: {
+    submit: (e) => void;
   }
 }
 
 export class Button extends Block {
   constructor(props: ButtonProps) {
-    super('div', props);
+    super('button', props);
+  }
+
+  init() {
+    if (this.props.type) {
+      this.element?.setAttribute('type', this.props.type);
+    }
   }
 
   render() {
-    const template = Handlebars.compile(`<button type=${this.props.type}>${this.props.title}</button>`);
+    const template = Handlebars.compile(`${this.props.title}`);
 
     return this.compile(template, this.props);
   }

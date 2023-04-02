@@ -1,0 +1,28 @@
+{
+  "extends": "tslint-config-airbnb-base",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "no-duplicate-variable": true,
+    "no-use-before-declare": false,
+    "quotes": ["error", "single"],
+    "ter-arrow-body-style": ["error", "never"],
+    "ter-arrow-parens": [true, "as-needed"],
+    "@typescript-eslint/quotes": ["error", "single"],
+    "max-len": [2, 100],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "trailing-comma": false,
+    "no-magic-numbers": false,
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-pascal-case",
+        "allow-leading-underscore",
+        "allow-snake-case",
+        "allow-trailing-underscore",
+        "require-const-for-all-caps"
+      ]
+    }
+  }
+}

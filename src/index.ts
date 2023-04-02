@@ -49,19 +49,19 @@ if (home) {
 }
 
 const chatSettings: HTMLElement = document.querySelector('#chat__settings');
-const chatHeaderPopup: HTMLElement = document.querySelector('.chat__header-popup');
+const chatHeaderPopup: HTMLElement = document.querySelector('#deleteUser');
 
 if (chatSettings) {
   chatSettings.addEventListener('click', () => {
-    chatHeaderPopup.classList.toggle('show');
+    chatHeaderPopup.classList.toggle('showChatHeader');
   });
 }
 
 const chatMedia: HTMLElement = document.querySelector('#chat__media');
-const chatFooterPopup: HTMLElement = document.querySelector('.chat__footer-popup');
+const chatFooterPopup: HTMLElement = document.querySelector('#chat__footer_popup');
 
 if (chatMedia) {
   chatMedia.addEventListener('click', () => {
-    chatFooterPopup.classList.toggle('show');
+    chatFooterPopup.classList.toggle('showChatFooter');
   });
 }

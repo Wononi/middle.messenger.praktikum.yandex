@@ -1,4 +1,4 @@
-.signin {
+.signup {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,13 +34,9 @@
 }
 
 .invalid {
-  border: 1px solid red;
+  border: 1px solid red !important;
 }
 
 .hide {
   display: none;
-}
-
-label {
-  color: red;
 }
