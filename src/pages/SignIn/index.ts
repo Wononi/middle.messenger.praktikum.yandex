@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 import s from './signin.module.scss';
 import {Block} from '../../utils/Block';
 import {FormLogin} from '../../components/FormLogin';
-
+import {signIn} from '../../state/user';
 
 interface SignInProps {
 
@@ -18,7 +18,11 @@ export class Sigin extends Block {
       events: {
         submit: (e) => {
           e.preventDefault();
-          console.log(e);
+          const signInObj = {
+            "login": e.srcElement[0].value,
+            "password": e.srcElement[1].value
+          }
+          signIn(signInObj)
         },
       },
     });
@@ -30,7 +34,7 @@ export class Sigin extends Block {
         <div class=${s.signin__wrapper}>
           <h2>Вход</h2>
           {{{formLogin}}}
-          <a href="/signup">Нет аккаунта?</a>
+          <a href="/sign-up">Нет аккаунта?</a>
         </div>
     </div>
   `);

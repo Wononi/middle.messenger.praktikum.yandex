@@ -16,7 +16,7 @@ export class NotFound extends Block<NotFoundProps> {
   render() {
     const template = Handlebars.compile(`
         Страница не найдена<br>404
-        <a href="/home">Вернуться на главную</a>
+        <a href="/messenger">Вернуться на главную</a>
     `);
     return this.compile(template, this.props)
   }

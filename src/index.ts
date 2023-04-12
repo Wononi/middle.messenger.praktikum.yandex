@@ -1,9 +1,28 @@
-import app from './App';
 import './style/index.scss';
+import { Sigin } from './pages/SignIn';
+import { SigUp } from './pages/SignUp';
+import { Home } from './pages/Home';
+import { Profile } from './pages/Profile';
+import { Settings } from './pages/Profile/Settings';
+import { Password } from './pages/Profile/Password';
+import { NotFound } from './pages/notFound';
+import { Navigation } from './pages/Navigation';
+import { Error } from './pages/Error';
+import {Router} from './utils/Router';
 
-const root: HTMLElement = document.querySelector('#root');
+const route = new Router('#root');
 
-root.append(app());
+route
+  .use('/', Sigin)
+  .use('/sign-up', SigUp)
+  .use('/settings', Settings)
+  .use('/messenger', Home)
+  .use('/profile', Profile)
+  .use('/password', Password)
+  .use('/not-found', NotFound)
+  .use('/500', Error)
+  .start();
+
 
 const profile: HTMLElement = document.querySelector('.profile');
 const popup: HTMLElement = document.querySelector('.popup');

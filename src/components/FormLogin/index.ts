@@ -45,7 +45,7 @@ export class FormLogin extends Block<FormProps> {
       hide: s.hide,
     });
     this.children.password = new Input({
-      type: 'text',
+      type: 'password',
       name: 'password',
       id: 'password',
       required: true,

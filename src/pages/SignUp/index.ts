@@ -2,6 +2,9 @@ import Handlebars from 'handlebars';
 import s from './signup.module.scss';
 import {Block} from '../../utils/Block';
 import {FormRegister} from '../../components/FormRegister';
+import {HTTPTransport} from '../../utils/API';
+
+const api = new HTTPTransport()
 
 interface SignUpProps {
 
@@ -33,7 +36,7 @@ const hideErrorMessage = (input, label) => {
   label.getContent()?.classList.add(s.hide);
 };
 
-const test = (formNode, children) => {
+const validRegister = (formNode, children) => {
   const email = children.email;
   const emailLabel = children.emailLabel;
   const login = children.login;
@@ -119,7 +122,17 @@ export class SigUp extends Block<SignUpProps> {
       events: {
         submit: (e) => {
           e.preventDefault();
-          console.log(test(e.target, this.children.formRegister.children));
+          let obj1 = validRegister(e.target, this.children.formRegister.children)
+          let obj2 = {
+            "first_name": obj1.first_name,
+            "second_name": obj1.second_name,
+            "login": obj1.login,
+            "email": obj1.email,
+            "password": obj1.password,
+            "phone": obj1.phone
+          }
+          console.log(JSON.stringify(obj2));
+          api.post('/auth/signup', {data: JSON.stringify(obj2), headers: {'Content-Type': 'application/json'}})
         },
       },
     });
@@ -131,7 +144,7 @@ export class SigUp extends Block<SignUpProps> {
         <div class=${s.signup__wrapper}>
             <h2>Регистрация</h2>
             {{{formRegister}}}
-            <a href="/signin">Войти</a>
+            <a href="/">Войти</a>
         </div>
     </div>
     `);
