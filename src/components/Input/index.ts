@@ -9,6 +9,7 @@ interface InputProps {
   required?: boolean;
   id?: string;
   value?: string;
+  accept: string;
   events?: {
     focus?: (e) => void;
     blur?: (e) => void;
@@ -34,6 +35,17 @@ export class Input extends Block {
     if (this.props.value) {
       this.element?.setAttribute('value', this.props.value);
     }
+    if (this.props.accept) {
+      this.element?.setAttribute('accept', this.props.accept);
+    }
+  }
+
+  public getName() {
+    return (this.element as HTMLInputElement).name;
+  }
+
+  public getValue() {
+    return (this.element as HTMLInputElement).value;
   }
 
   render() {

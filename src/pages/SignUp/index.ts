@@ -2,9 +2,8 @@ import Handlebars from 'handlebars';
 import s from './signup.module.scss';
 import {Block} from '../../utils/Block';
 import {FormRegister} from '../../components/FormRegister';
-import {HTTPTransport} from '../../utils/API';
-
-const api = new HTTPTransport()
+import AuthController from '../../controllers/AuthController';
+import {SignupData} from '../../api/AuthAPI';
 
 interface SignUpProps {
 
@@ -131,8 +130,7 @@ export class SigUp extends Block<SignUpProps> {
             "password": obj1.password,
             "phone": obj1.phone
           }
-          console.log(JSON.stringify(obj2));
-          api.post('/auth/signup', {data: JSON.stringify(obj2), headers: {'Content-Type': 'application/json'}})
+          AuthController.signup(obj2 as SignupData);
         },
       },
     });

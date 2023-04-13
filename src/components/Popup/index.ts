@@ -1,10 +1,15 @@
 import Handlebars from 'handlebars';
-import './popup.scss';
+import s from'./popup.module.scss';
 import {Block} from '../../utils/Block';
+import {Button} from '../Button/inedex';
+import {CloseBtn} from '../CloseBtn';
+import {Input} from '../Input';
+import ProfileController from '../../controllers/ProfileController';
+import {AvatarForm} from '../AvatarForm';
 
 interface PopupProps {
   title: string
-  btn: string;
+  type: string;
 }
 
 export class Popup extends Block<PopupProps> {
@@ -12,18 +17,49 @@ export class Popup extends Block<PopupProps> {
     super('div', props);
   }
 
-  render() {
-    const template = Handlebars.compile(`
-      <div class="popup">
-        <div class="popup__wrapper">
-          <h4>${this.props.title}</h4>
-          <p>Имя пользователя</p>
-          <input type="text">
-          <button class="delete">${this.props.btn}</button>
-        </div>
-      </div>
-    `);
+  init() {
+    this.element?.classList.add(s.popup);
+    this.children.form = new AvatarForm({
+      events: {
+        submit: (e) => {
+          e.preventDefault();
+          const avatar = e.target.children[0];
+          const form = new FormData(e.target);
+          ProfileController.avatar(form);
+          // fetch(`https://ya-praktikum.tech/api/v2/user/profile/avatar`, {
+          //   method: 'PUT',
+          //   credentials: 'include', // Нам нужно подставлять cookies
+          //   mode: 'cors', // Работаем с CORS
+          //   body: form,
+          // })
+          //   .then(response => response.json())
+          //   .then(data => {
+          //     console.log(data);
+          //     return data;
+          //   });
+        }
+      }
+    })
+    this.children.close = new CloseBtn({
+      events: {
+        click: () => {
+          (this.element as HTMLElement).style.display = 'none'
+        }
+      }
+    })
+  }
 
-    return this.compile(template, this.props)
+  render() {
+    switch (this.props.type) {
+      case 'avatar':
+        const template = Handlebars.compile(`
+            <div class=${s.wrapper}>
+                 {{{close}}}
+                 <h4>${this.props.title}</h4>
+                 {{{form}}}
+            </div>
+        `)
+        return this.compile(template, this.props)
+    }
   }
 }

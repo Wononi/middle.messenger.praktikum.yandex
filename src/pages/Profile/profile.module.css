@@ -1,37 +1,27 @@
 .profile {
   display: grid;
-  grid-template-columns: fit-content(40%) 1fr;
-
-  &__sidebar {
+  grid-template-columns: fit-content(40%) 1fr; }
+  .profile__sidebar {
     height: 100vh;
     background: rgba(0, 0, 0, 0.2);
     padding: 0 22px;
     display: flex;
-    align-items: center;
-
-    a {
-      display: block;
-    }
-  }
-
-  &__content {
+    align-items: center; }
+    .profile__sidebar a {
+      display: block; }
+  .profile__content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
-
-    h3 {
+    padding-top: 50px; }
+    .profile__content h3 {
       font-style: normal;
       font-weight: 600;
       font-size: 24px;
       line-height: 11px;
       color: #000000;
-      margin-bottom: 100px;
-    }
-
-
-
-    a {
+      margin-bottom: 100px; }
+    .profile__content a {
       margin-left: auto;
       margin-right: auto;
       align-self: flex-start;
@@ -43,17 +33,14 @@
       font-style: normal;
       font-weight: 600;
       font-size: 18px;
-      line-height: 22px;
-    }
-
-    .signout {
+      line-height: 22px; }
+    .profile__content .signout {
       padding: 0;
       background: none;
       font-style: normal;
       font-weight: 700;
       font-size: 20px;
       line-height: 24px;
-      color: #ff0000;
-    }
-  }
-}
+      color: #ff0000; }
+
+/*# sourceMappingURL=profile.module.css.map */

@@ -2,6 +2,11 @@ import Handlebars from 'handlebars';
 import {Block} from '../../../utils/Block';
 import s from '../profile.module.scss';
 import {ProfileItem} from '../../../components/ProfileItem';
+import {withStore} from '../../../utils/Store';
+import {Button} from '../../../components/Button/inedex';
+import {Input} from '../../../components/Input';
+import ProfileController from '../../../controllers/ProfileController';
+import {SettingsData} from '../../../api/ProfileAPI';
 
 interface SettingsProps {}
 
@@ -19,7 +24,9 @@ const isTelValid = (value) => {
   return TEL_REGEXP.test(value);
 };
 
-export class Settings extends Block<SettingsProps> {
+const userFields = ['first_name', 'second_name', 'display_name', 'login', 'email', 'phone'] as Array<keyof SettingsProps>;
+
+class Settings extends Block<SettingsProps> {
   constructor(props: SettingsProps) {
     super('div', props);
   }
@@ -31,7 +38,7 @@ export class Settings extends Block<SettingsProps> {
       name: 'Почта',
       inputName: 'email',
       inputType: 'email',
-      inputValue: 'pochta@yandex.ru',
+      inputValue: this.props.email,
       events: {
         blur: (e) => {
           if (isEmailValid(e.target.value)) {
@@ -47,7 +54,7 @@ export class Settings extends Block<SettingsProps> {
       name: 'Логин',
       inputName: 'login',
       inputType: 'text',
-      inputValue: 'ivanivanov',
+      inputValue: this.props.login,
       events: {
         blur: (e) => {
           if (e.target.value < 3 || e.target.value > 20 || !/^[a-zA-z]{1}[a-zA-Z1-9]{3,20}$/.test(e.target.value)) {
@@ -63,7 +70,7 @@ export class Settings extends Block<SettingsProps> {
       name: 'Имя',
       inputName: 'first_name',
       inputType: 'text',
-      inputValue: 'Иван',
+      inputValue: this.props.first_name,
       events: {
         blur: (e) => {
           if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
@@ -79,7 +86,7 @@ export class Settings extends Block<SettingsProps> {
       name: 'Фамилия',
       inputName: 'second_name',
       inputType: 'text',
-      inputValue: 'Иванов',
+      inputValue: this.props.second_name,
       events: {
         blur: (e) => {
           if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
@@ -95,7 +102,7 @@ export class Settings extends Block<SettingsProps> {
       name: 'Имя в чате',
       inputName: 'display_name',
       inputType: 'text',
-      inputValue: 'Иван',
+      inputValue: this.props.display_name,
       events: {
         blur: (e) => {
           if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
@@ -111,17 +118,33 @@ export class Settings extends Block<SettingsProps> {
       name: 'Телефон',
       inputName: 'phone',
       inputType: 'tel',
-      inputValue: '+7 (909) 967 30 30',
+      inputValue: this.props.phone,
       events: {
         blur: (e) => {
           if (isTelValid(e.target.value)) {
             console.log('Телефон корректен');
           } else {
-            alert('Телефон введен не верно')
+            alert('Телефон введен не верно');
           }
         },
       },
     });
+    this.children.button = new Button({
+      title: 'Сохранить',
+      type: 'submit',
+      events: {
+        click: (e) => {
+          e.preventDefault()
+          const values = Object
+            .values(this.children)
+            .filter(child => child instanceof ProfileItem)
+            .map((child) => ([(child.children.input as Input).getName(), (child.children.input as Input).getValue()]))
+
+          const data = Object.fromEntries(values);
+          ProfileController.settings(data as SettingsData);
+        }
+      }
+    })
   }
 
   render() {
@@ -150,11 +173,13 @@ export class Settings extends Block<SettingsProps> {
           {{{secondName}}}
           {{{name}}}
           {{{phone}}}
-          <a href="/profile" class="profile__content-change__data">
-             Сохранить
-          </a>
+          {{{button}}}
       </div>
     `)
     return this.compile(template, this.props)
   }
 }
+
+const withUser = withStore((state) => ({ ...state.user }))
+
+export const SettingsPage = withUser(Settings);

@@ -1,0 +1,24 @@
+@charset "UTF-8";
+.avatar {
+  padding: 42.5px 45px;
+  background: #efefef;
+  border-radius: 50%;
+  width: max-content;
+  position: relative;
+  margin-bottom: 20px; }
+  .avatar img {
+    width: 100px; }
+  .avatar:hover {
+    background: rgba(0, 0, 0, 0.55);
+    cursor: pointer; }
+    .avatar:hover:before {
+      content: 'Поменять аватар';
+      position: absolute;
+      width: 80px;
+      text-align: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff; }
+
+/*# sourceMappingURL=profileAvatar.module.css.map */

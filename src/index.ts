@@ -2,85 +2,56 @@ import './style/index.scss';
 import { Sigin } from './pages/SignIn';
 import { SigUp } from './pages/SignUp';
 import { Home } from './pages/Home';
-import { Profile } from './pages/Profile';
-import { Settings } from './pages/Profile/Settings';
-import { Password } from './pages/Profile/Password';
+import { ProfilePage } from './pages/Profile';
+import { SettingsPage } from './pages/Profile/Settings';
+import { PasswordPage } from './pages/Profile/Password';
 import { NotFound } from './pages/notFound';
 import { Navigation } from './pages/Navigation';
 import { Error } from './pages/Error';
-import {Router} from './utils/Router';
+import Router from './utils/Router';
+import AuthController from './controllers/AuthController';
 
-const route = new Router('#root');
+enum Routes {
+  Index = '/',
+  Register = '/sign-up',
+  Profile = '/profile',
+  Messenger = '/messenger',
+  Settings = '/settings',
+  Password = '/password',
+}
 
-route
-  .use('/', Sigin)
-  .use('/sign-up', SigUp)
-  .use('/settings', Settings)
-  .use('/messenger', Home)
-  .use('/profile', Profile)
-  .use('/password', Password)
-  .use('/not-found', NotFound)
-  .use('/500', Error)
-  .start();
+window.addEventListener('DOMContentLoaded', async () => {
+  Router
+    .use(Routes.Index, Sigin)
+    .use(Routes.Register, SigUp)
+    .use(Routes.Profile, ProfilePage)
+    .use(Routes.Messenger, Home)
+    .use(Routes.Settings, SettingsPage)
+    .use(Routes.Password, PasswordPage)
 
+  let isProtectedRoute = true;
 
-const profile: HTMLElement = document.querySelector('.profile');
-const popup: HTMLElement = document.querySelector('.popup');
+  switch (window.location.pathname) {
+    case Routes.Index:
+    case Routes.Register:
+      isProtectedRoute = false;
+      break;
+  }
 
-if (profile) {
-  profile.addEventListener('click', (e: Event): void => {
-    const currentElem: HTMLElement = <HTMLElement>e.target;
-    if (currentElem.classList.value === 'profile__content-avatar') {
-      popup.style.display = 'flex';
-    } else if (currentElem.classList.value === 'popup' || currentElem.tagName === 'BUTTON') {
-      popup.style.display = 'none';
+  try {
+    await AuthController.fetchUser();
+
+    Router.start();
+
+    if (!isProtectedRoute) {
+      Router.go(Routes.Profile)
     }
-  });
-}
+  } catch (e) {
+    Router.start();
 
-const home: HTMLElement = document.querySelector('.home');
-
-if (home) {
-  home.addEventListener('click', (e: MouseEvent): void => {
-    const currentElem: HTMLElement = <HTMLElement>e.target;
-    if (currentElem.id === 'addNewUser') {
-      popup.style.display = 'flex';
-    } else if (currentElem.classList.value === 'popup' || currentElem.tagName === 'BUTTON') {
-      popup.style.display = 'none';
+    if (isProtectedRoute) {
+      Router.go(Routes.Index);
     }
-  });
-}
+  }
 
-const deleteElem: HTMLElement = document.querySelector('#delete');
-const deletePopupElem: HTMLElement = document.querySelector('#delete .popup');
-
-if (home) {
-  home.addEventListener('click', (e) => {
-    const currentElem: HTMLElement = <HTMLElement>e.target;
-    if (currentElem.id === 'deleteUser' || currentElem.id === 'deleteUserP') {
-      deleteElem.style.display = 'block';
-      deletePopupElem.style.display = 'flex';
-    } else if (currentElem.classList.value === 'popup' || currentElem.tagName === 'BUTTON' || currentElem.id === 'delete') {
-      deleteElem.style.display = 'none';
-      popup.style.display = 'none';
-    }
-  });
-}
-
-const chatSettings: HTMLElement = document.querySelector('#chat__settings');
-const chatHeaderPopup: HTMLElement = document.querySelector('#deleteUser');
-
-if (chatSettings) {
-  chatSettings.addEventListener('click', () => {
-    chatHeaderPopup.classList.toggle('showChatHeader');
-  });
-}
-
-const chatMedia: HTMLElement = document.querySelector('#chat__media');
-const chatFooterPopup: HTMLElement = document.querySelector('#chat__footer_popup');
-
-if (chatMedia) {
-  chatMedia.addEventListener('click', () => {
-    chatFooterPopup.classList.toggle('showChatFooter');
-  });
-}
+});

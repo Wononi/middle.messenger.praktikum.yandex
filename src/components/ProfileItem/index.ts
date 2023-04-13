@@ -20,16 +20,26 @@ export class ProfileItem extends Block<ProfileItemProps> {
     super('div', props);
   }
 
+  public getName() {
+    return (this.element as HTMLInputElement).name;
+  }
+
+  public getValue() {
+    return (this.element as HTMLInputElement).value;
+  }
+
   init() {
     this.element?.classList.add(s.profile__content_item)
-    this.children.input = new Input({
-      name: this.props.inputName,
-      value: this.props.inputValue,
-      type: this.props.inputType,
-      events: {
-        blur: this.props.events.blur
-      },
-    })
+    if (this.props.isSettings) {
+      this.children.input = new Input({
+        name: this.props.inputName,
+        value: this.props.inputValue,
+        type: this.props.inputType,
+        events: {
+          blur: this.props.events.blur
+        },
+      })
+    }
   }
 
   render() {
@@ -42,7 +52,7 @@ export class ProfileItem extends Block<ProfileItemProps> {
     } else {
       const template = Handlebars.compile(`
         <p>${this.props.name}</p>
-        <p>${this.props.value}</p>
+        <p>${this.props.value ? this.props.value : ''}</p>
     `)
       return this.compile(template, this.props)
     }

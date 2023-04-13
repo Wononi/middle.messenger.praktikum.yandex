@@ -160,10 +160,13 @@ export class Block<P extends Record<string, any> = any> {
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = {...context};
 
-    Object.entries(this.children)
-      .forEach(([name, component]) => {
+    Object.entries(this.children).forEach(([name, component]) => {
+      if (Array.isArray(component)) {
+        contextAndStubs[name] = component.map(child => `<div data-id="${child.id}"></div>`)
+      } else {
         contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
-      });
+      }
+    });
 
     const html = template(contextAndStubs);
 
@@ -171,19 +174,25 @@ export class Block<P extends Record<string, any> = any> {
 
     temp.innerHTML = html;
 
-    Object.entries(this.children)
-      .forEach(([_, component]) => {
-        const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+    const replaceStub = (component: Block) => {
+      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
-        if (!stub) {
-          return;
-        }
+      if (!stub) {
+        return;
+      }
 
-        component.getContent()
-          ?.append(...Array.from(stub.childNodes));
+      component.getContent()?.append(...Array.from(stub.childNodes));
 
-        stub.replaceWith(component.getContent()!);
-      });
+      stub.replaceWith(component.getContent()!);
+    }
+
+    Object.entries(this.children).forEach(([_, component]) => {
+      if (Array.isArray(component)) {
+        component.forEach(replaceStub);
+      } else {
+        replaceStub(component);
+      }
+    });
 
     return temp.content;
   }

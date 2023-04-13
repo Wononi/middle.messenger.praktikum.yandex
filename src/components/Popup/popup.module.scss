@@ -9,13 +9,24 @@
   display: none;
   z-index: 10;
 
-  &__wrapper {
+  .wrapper {
     background: #f1f1f1;
     border-radius: 20px;
     padding: 40px 110px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    span {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+      cursor: pointer;
+    }
 
     h4 {
       font-style: normal;
