@@ -6,10 +6,10 @@ interface InputProps {
   type: string;
   placeholder?: string;
   name?: string;
-  required?: boolean;
+  required?: string;
   id?: string;
   value?: string;
-  accept: string;
+  accept?: string;
   events?: {
     focus?: (e) => void;
     blur?: (e) => void;
@@ -18,26 +18,7 @@ interface InputProps {
 
 export class Input extends Block {
   constructor(props: InputProps) {
-    super('input', props);
-  }
-
-  init() {
-    this.element?.setAttribute('type', this.props.type);
-    if (this.props.name) {
-      this.element?.setAttribute('name', this.props.name);
-    }
-    if (this.props.required) {
-      this.element?.setAttribute('required', '');
-    }
-    if (this.props.placeholder) {
-      this.element?.setAttribute('placeholder', this.props.placeholder);
-    }
-    if (this.props.value) {
-      this.element?.setAttribute('value', this.props.value);
-    }
-    if (this.props.accept) {
-      this.element?.setAttribute('accept', this.props.accept);
-    }
+    super(props);
   }
 
   public getName() {
@@ -49,7 +30,15 @@ export class Input extends Block {
   }
 
   render() {
-    const template = Handlebars.compile(``);
+    const template = Handlebars.compile(`
+        <input type=${this.props.type} 
+               ${this.props.name ? `name=${this.props.name}` : ""} 
+               ${this.props.placeholder ? `placeholder=${this.props.placeholder}` : ""} 
+               ${this.props.value ? `value=${this.props.value}` : ""} 
+               ${this.props.accept ? `accept=${this.props.accept}` : ""} 
+               ${this.props.required ? this.props.required : ""} 
+        >
+    `);
 
     return this.compile(template, this.props);
   }

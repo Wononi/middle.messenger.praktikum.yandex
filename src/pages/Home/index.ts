@@ -1,22 +1,35 @@
 import Handlebars from 'handlebars';
 import s from './home.module.scss';
-import {Chat} from '../../components/Chat';
+import {ChatPage} from '../../components/Chat';
 import {Block} from '../../utils/Block';
 import {SidebarItem} from '../../components/SidebarItem';
 import {Input} from '../../components/Input';
 import {ChatItem} from '../../components/ChatItem';
+import {withStore} from '../../utils/Store';
+import {Popup} from '../../components/Popup';
 
 interface HomeProps {
 
 }
 
+
 export class Home extends Block<HomeProps> {
   constructor(props: HomeProps) {
-    super('div', props);
+    super(props);
   }
 
+  id = null;
+  chatName;
+
   init() {
-    this.element?.classList.add(s.home);
+    // debugger
+    this.children.chatItems = Object.entries(this.props).map(item => {
+      if (window.location.pathname === '/messenger/' + item[1].id) {
+        this.id = item[1].id;
+        this.chatName = item[1].title;
+      }
+      return new ChatItem({name: item[1].title, message: item[1].last_message, missMessage: item[1].unread_count, img: item[1].avatar, href: item[1].id});
+    });
     this.children.profileLink = new SidebarItem({
       svg: `<svg width="73" height="73" viewBox="0 0 73 73" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="36.5" cy="24.5" r="17" stroke="black" stroke-width="3"/>
@@ -37,26 +50,42 @@ export class Home extends Block<HomeProps> {
                         </clipPath>
                     </defs>
                 </svg>`,
+      events: {
+        click: () => {
+          this.children.createChats.getContent().style.display = 'block'
+        }
+      }
     });
+    this.children.createChats = new Popup({
+      type: 'createChats',
+      title: 'Создать чат'
+    })
     this.children.search = new Input({
       type: 'search',
       placeholder: 'Поиск',
     });
-    this.children.chat1 = new ChatItem({
-      img: 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png',
-      name: 'Алена',
-      message: 'Привет',
-      time: '10:50',
-      missMessage: 2,
-      href: '/home/1',
-    });
-    this.children.chat = new Chat({
+    this.children.chat = new ChatPage({
+      chatName: this.chatName,
+      chatId: this.id
+    })
+  }
 
+  protected componentDidUpdate(oldProps: HomeProps, newProps: HomeProps): boolean {
+    // debugger
+    this.children.chatItems = Object.entries(this.props).map(item => {
+      if (window.location.pathname === '/messenger/' + item[1].id) {
+        this.id = item[1].id;
+        this.chatName = item[1].title;
+      }
+      return new ChatItem({name: item[1].title, message: item[1].last_message, missMessage: item[1].unread_count, img: item[1].avatar, href: item[1].id});
     });
+    return true;
   }
 
   render() {
     const template = Handlebars.compile(`
+        <div class=${s.home}>
+          {{{createChats}}}
           <div class=${s.home__sidebar}>
               {{{profileLink}}}
               {{{addUser}}}
@@ -65,15 +94,22 @@ export class Home extends Block<HomeProps> {
               <div class=${s.home__chat_list__search}>
                   {{{search}}}
               </div>
-              {{{chat1}}}
+              {{#each chatItems}}
+                  {{{this}}}
+              {{/each}}
           </div>
           <div class=${s.home__chat}>
-              ${window.location.pathname === '/home'? `<p>Выберите чат, чтобы начать общение</p>` : `{{{chat}}}`}
+              ${this.id === null? `<p>Выберите чат, чтобы начать общение</p>` : `{{{chat}}}`}
           </div>
+        </div>
     `);
 
     return this.compile(template, this.props);
   }
 }
+
+const withUser = withStore((state) => ({ ...state.chats }))
+
+export const HomePage = withUser(Home);
 
 

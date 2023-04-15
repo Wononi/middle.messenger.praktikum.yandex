@@ -2,46 +2,75 @@ import Handlebars from 'handlebars';
 import s from './Chat.module.scss';
 import {Block} from '../../utils/Block';
 import {ChatHeader} from '../ChatHeader';
-import {ChatMessages} from '../ChatMessages';
+import {ChatMessagesComp} from '../ChatMessages';
 import {ChatFooter} from '../ChatFooter';
+import store, {withStore} from '../../utils/Store';
+import {Home} from '../../pages/Home';
+import {Popup} from '../Popup';
+import controllerM from '../../controllers/MessagesController';
+import controllerC from '../../controllers/ChatsController';
 
 interface ChatProps {
-
+  chatId: number;
+  chatName: string;
+  chatImg?: string;
 }
 
-export class Chat extends Block<ChatProps> {
+class Chat extends Block<ChatProps> {
   constructor(props: ChatProps) {
-    super('div', props);
+    super(props);
   }
 
   init() {
-    this.element?.classList.add(s.chat);
     this.children.chatHeader = new ChatHeader({
-      src: 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png',
-      userName: 'Алена',
+      src: this.props.chatImg ? this.props.chatImg : 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png',
+      chatName: this.props.chatName,
+      chatId: this.props.chatId,
     });
-    this.children.chatMessagesOne = new ChatMessages({
-      isMyMessage: false,
-      message: 'Привет, как твои дела? Давно не виделись',
+    this.children.adduserPopup = new Popup({
+      type: 'addUser',
+      title: 'Добавить пользователя',
+      chatId: this.props.chatId,
     });
-    this.children.chatMessagesTwo = new ChatMessages({
-      isMyMessage: true,
-      message: 'Привет!',
+    this.children.deleteUserPopup = new Popup({
+      type: 'deleteUser',
+      title: 'Удалить пользователя',
+      chatId: this.props.chatId,
     });
     this.children.chatFooter = new ChatFooter({
-
+      id: this.props.chatId
     });
   }
 
+  protected componentDidUpdate(oldProps: ChatProps, newProps: ChatProps): boolean {
+    console.log(newProps[this.props.chatId]);
+    if (newProps[this.props.chatId]) {
+      this.children.messages = newProps[this.props.chatId].map(message => {
+        return new ChatMessagesComp({message: message.content, idMessage: message.user_id})
+      })
+    }
+    return true
+  }
+
   render() {
+    // console.log(this.props[10287]);
     const template = Handlebars.compile(`
-          {{{chatHeader}}}
-          {{{chatMessagesOne}}}
-          {{{chatMessagesTwo}}}
-          {{{chatFooter}}}
+          <div class=${s.chat}>
+            {{{adduserPopup}}}
+            {{{deleteUserPopup}}}
+            {{{chatHeader}}}
+            {{#each messages}}
+                  {{{this}}}
+              {{/each}}
+            {{{chatFooter}}}
+          </div>
     `);
 
     return this.compile(template, this.props);
   }
 }
+
+const withUser = withStore((state) => ({ ...state.messages }))
+
+export const ChatPage = withUser(Chat);
 

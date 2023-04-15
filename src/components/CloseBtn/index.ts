@@ -9,11 +9,11 @@ interface CloseBtnProps {
 
 export class CloseBtn extends Block<CloseBtnProps> {
   constructor(props: CloseBtnProps) {
-    super('span', props);
+    super(props);
   }
 
   render() {
-    const template = Handlebars.compile(`\t&#10006;`);
+    const template = Handlebars.compile(`<span>\t&#10006;</span>`);
 
     return  this.compile(template, this.props);
   }

@@ -9,16 +9,15 @@ interface LabelProps {
 
 export class Label extends Block {
   constructor(props: LabelProps) {
-    super('label', props);
+    super(props);
   }
 
   init() {
     this.element?.setAttribute('for', this.props.for);
-    this.element?.setAttribute('class', this.props.hide);
   }
 
   render() {
-    const template = Handlebars.compile(`${this.props.label}`);
+    const template = Handlebars.compile(`<label class=${this.props.hide}>${this.props.label}</label>`);
 
     return this.compile(template, this.props);
   }

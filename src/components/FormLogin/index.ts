@@ -15,7 +15,7 @@ interface FormProps {
 
 export class FormLogin extends Block<FormProps> {
   constructor(props: FormProps) {
-    super('form', props);
+    super(props);
   }
   init() {
     this.element?.setAttribute('onsubmit', this.props.events.submit);
@@ -23,7 +23,7 @@ export class FormLogin extends Block<FormProps> {
       type: 'text',
       name: 'login',
       id: 'login',
-      required: true,
+      required: 'required',
       events: {
         focus: (e) => {
           if (e.target.value === '') {
@@ -48,7 +48,7 @@ export class FormLogin extends Block<FormProps> {
       type: 'password',
       name: 'password',
       id: 'password',
-      required: true,
+      required: 'required',
       events: {
         focus: (e) => {
           if (e.target.value === '') {
@@ -77,13 +77,15 @@ export class FormLogin extends Block<FormProps> {
 
   render() {
     const template = Handlebars.compile(`
-      <p>Логин</p>
-      {{{login}}}
-      {{{labelLogin}}}
-      <p>Пароль</p>
-      {{{password}}}
-      {{{labelPassword}}}
-      {{{button}}}
+      <form>
+        <p>Логин</p>
+        {{{login}}}
+        {{{labelLogin}}}
+        <p>Пароль</p>
+        {{{password}}}
+        {{{labelPassword}}}
+        {{{button}}}
+      </form>
     `);
 
     return this.compile(template, this.props);

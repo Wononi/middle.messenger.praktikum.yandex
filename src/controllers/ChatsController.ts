@@ -1,6 +1,8 @@
 import API, { ChatsAPI } from '../api/ChatsAPI';
 import store from '../utils/Store';
 import MessagesController from './MessagesController';
+import Router from '../utils/Router';
+import {HomePage} from '../pages/Home';
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -29,6 +31,10 @@ class ChatsController {
 
   addUserToChat(id: number, userId: number) {
     this.api.addUsers(id, [userId]);
+  }
+
+  deleteUserToChat(id: number, userId: number) {
+    this.api.deleteUser(id, [userId]);
   }
 
   async delete(id: number) {

@@ -13,7 +13,7 @@ interface ButtonProps {
 
 export class Button extends Block {
   constructor(props: ButtonProps) {
-    super('button', props);
+    super(props);
   }
 
   init() {
@@ -23,7 +23,7 @@ export class Button extends Block {
   }
 
   render() {
-    const template = Handlebars.compile(`${this.props.title}`);
+    const template = Handlebars.compile(`<button>${this.props.title}</button>`);
 
     return this.compile(template, this.props);
   }

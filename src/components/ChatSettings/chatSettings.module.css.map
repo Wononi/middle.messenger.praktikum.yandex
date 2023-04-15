@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,QAAS;EACP,QAAQ,EAAE,QAAQ;;AAGpB,aAAc;EACZ,OAAO,EAAE,IAAI;EACb,QAAQ,EAAE,QAAQ;EAClB,QAAQ,EAAE,QAAQ;EAClB,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,GAAG;EACV,OAAO,EAAE,IAAI;EACb,aAAa,EAAE,IAAI;;AAGrB,KAAM;EACJ,OAAO,EAAE,KAAK;;AAGhB,aAAc;EACZ,MAAM,EAAE,OAAO;EACf,aAAa,EAAE,GAAG",
+"sources": ["chatSettings.module.scss"],
+"names": [],
+"file": "chatSettings.module.css"
+}

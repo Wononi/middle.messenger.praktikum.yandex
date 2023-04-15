@@ -11,7 +11,7 @@ interface AvatarFormProps {
 
 export class AvatarForm extends Block<AvatarFormProps> {
   constructor(props: AvatarFormProps) {
-    super('form',props);
+    super(props);
   }
 
   init() {
@@ -28,8 +28,10 @@ export class AvatarForm extends Block<AvatarFormProps> {
 
   render() {
     const template = Handlebars.compile(`
-      {{{input}}}
-      {{{avaBtn}}}
+      <form>
+        {{{input}}}
+        {{{avaBtn}}}
+      </form>
     `)
 
     return this.compile(template, this.props);

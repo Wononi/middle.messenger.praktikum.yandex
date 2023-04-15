@@ -31,7 +31,8 @@ class ProfileController {
   async avatar(data: AvatarData) {
     try {
       await this.api.avatar(data);
-      alert('аватар успешно сменен')
+      alert('аватар успешно сменен');
+      location.reload()
     } catch (e: any) {
       console.error(e);
     }

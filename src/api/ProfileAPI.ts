@@ -14,10 +14,6 @@ export interface PasswordData {
   newPassword: string
 }
 
-export interface AvatarData {
-  formData: FormData;
-}
-
 
 export class ProfileAPI extends BaseAPI {
   constructor() {
@@ -32,7 +28,7 @@ export class ProfileAPI extends BaseAPI {
     return this.http.put('/password', data)
   }
 
-  avatar(data: AvatarData) {
+  avatar(data: any) {
     return this.http.put('/profile/avatar', data)
   }
 

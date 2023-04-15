@@ -13,7 +13,7 @@ interface FormRegisterProps {
 
 export class FormRegister extends Block<FormRegisterProps> {
   constructor(props: FormRegisterProps) {
-    super('form', props);
+    super(props);
   }
 
   init() {
@@ -200,6 +200,7 @@ export class FormRegister extends Block<FormRegisterProps> {
 
   render() {
     const template = Handlebars.compile(`
+      <form>
       <p>Почта</p>
       {{{email}}}
       {{{emailLabel}}}
@@ -222,6 +223,7 @@ export class FormRegister extends Block<FormRegisterProps> {
       {{{passwordRepeat}}}
       {{{passwordRepeatLabel}}}
       {{{button}}}
+      </form>
     `);
 
     return this.compile(template, this.props);

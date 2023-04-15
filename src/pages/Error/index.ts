@@ -1,22 +1,28 @@
 import Handlebars from 'handlebars';
 import s from './error.module.scss';
 import {Block} from '../../utils/Block';
+import {Link} from '../../components/Link';
 
 interface ErrorProps {}
 
 export class Error extends Block<ErrorProps> {
   constructor(props: ErrorProps) {
-    super('div', props);
+    super(props);
   }
 
   init() {
-    this.element?.classList.add(s.error)
+    this.children.link = new Link({
+      to: '/messenger',
+      label: 'Вернуться на главную'
+    })
   }
 
   render() {
     const template = Handlebars.compile(`
-        Мы уже решаем проблему<br>500
-        <a href="/home">Вернуться на главную</a>
+        <div class=${s.error}>
+          Мы уже решаем проблему<br>500
+          {{{link}}}
+        </div>
     `)
     return this.compile(template, this.props)
   }

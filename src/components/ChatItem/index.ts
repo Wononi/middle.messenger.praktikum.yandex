@@ -1,6 +1,7 @@
 import {Block} from '../../utils/Block';
 import Handlebars from 'handlebars';
 import s from './ChatItem.module.scss';
+import {Link} from '../Link';
 
 interface ChatItemProps {
   name: string;
@@ -13,21 +14,24 @@ interface ChatItemProps {
 
 export class ChatItem extends Block<ChatItemProps> {
   constructor(props: ChatItemProps) {
-    super('a', props);
+    super(props);
   }
 
   init() {
-    this.element?.classList.add(s.home__chat_list__item);
-    this.element?.setAttribute('href', this.props.href);
+    const content = `<img src="${this.props.img ? this.props.img : 'https://cdn.mywebicons.ru/i/webp/b5ab0a58a7c151645502d4e69c58b1fc.webp'}" alt="profile">
+          <p class=${s.home__chat_list__item_name}>${this.props.name}</p>
+          <p class=${s.home__chat_list__item_message}>${this.props.message ? this.props.message.content : 'Нет сообщений'}</p>
+          <p class=${s.home__chat_list__item_miss}>${this.props.missMessage}</p>`
+    this.children.link = new Link({
+      label: content,
+      to: '/messenger/' + this.props.href,
+      styleClass: s.home__chat_list__item
+    });
   }
 
   render() {
     const template = Handlebars.compile(`
-        <img src="${this.props.img}" alt="profile">
-        <p class=${s.home__chat_list__item_name}>${this.props.name}</p>
-        <p class=${s.home__chat_list__item_message}>${this.props.message}</p>
-        <p class=${s.home__chat_list__item_time}>${this.props.time}</p>
-        <p class=${s.home__chat_list__item_miss}>${this.props.missMessage}</p>
+        {{{link}}}
     `);
 
     return this.compile(template, this.props);

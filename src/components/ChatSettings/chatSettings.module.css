@@ -1,0 +1,20 @@
+.chatBtn {
+  position: relative; }
+
+.chatSettings {
+  display: none;
+  position: absolute;
+  position: absolute;
+  background: #bdbdbd;
+  right: 0px;
+  padding: 10px;
+  border-radius: 10px; }
+
+.show {
+  display: block; }
+
+.settingsItem {
+  cursor: pointer;
+  margin-bottom: 5px; }
+
+/*# sourceMappingURL=chatSettings.module.css.map */

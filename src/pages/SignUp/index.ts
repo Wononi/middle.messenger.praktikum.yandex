@@ -4,6 +4,7 @@ import {Block} from '../../utils/Block';
 import {FormRegister} from '../../components/FormRegister';
 import AuthController from '../../controllers/AuthController';
 import {SignupData} from '../../api/AuthAPI';
+import {Link} from '../../components/Link';
 
 interface SignUpProps {
 
@@ -113,7 +114,7 @@ const validRegister = (formNode, children) => {
 
 export class SigUp extends Block<SignUpProps> {
   constructor(props: SignUpProps) {
-    super('div', props);
+    super(props);
   }
 
   init() {
@@ -134,6 +135,10 @@ export class SigUp extends Block<SignUpProps> {
         },
       },
     });
+    this.children.link = new Link({
+      to: '/',
+      label: 'Войти'
+    })
   }
 
   render() {
@@ -142,7 +147,7 @@ export class SigUp extends Block<SignUpProps> {
         <div class=${s.signup__wrapper}>
             <h2>Регистрация</h2>
             {{{formRegister}}}
-            <a href="/">Войти</a>
+            {{{link}}}
         </div>
     </div>
     `);

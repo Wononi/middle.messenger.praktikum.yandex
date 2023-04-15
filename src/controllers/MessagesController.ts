@@ -25,7 +25,6 @@ class MessagesController {
     if (this.sockets.has(id)) {
       return;
     }
-
     const userId = store.getState().user.id;
 
     const wsTransport = new WSTransport(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
@@ -57,7 +56,6 @@ class MessagesController {
     if (!socket) {
       throw new Error(`Chat ${id} is not connected`);
     }
-
     socket.send({type: 'get old', content: '0'});
   }
 

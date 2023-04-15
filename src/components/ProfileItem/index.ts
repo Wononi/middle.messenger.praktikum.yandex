@@ -4,6 +4,7 @@ import s from './ProfileItem.module.scss';
 import {Input} from '../Input';
 
 interface ProfileItemProps {
+  id: number;
   name: string;
   value?: string;
   isSettings: boolean;
@@ -17,7 +18,7 @@ interface ProfileItemProps {
 
 export class ProfileItem extends Block<ProfileItemProps> {
   constructor(props: ProfileItemProps) {
-    super('div', props);
+    super(props);
   }
 
   public getName() {
@@ -29,7 +30,6 @@ export class ProfileItem extends Block<ProfileItemProps> {
   }
 
   init() {
-    this.element?.classList.add(s.profile__content_item)
     if (this.props.isSettings) {
       this.children.input = new Input({
         name: this.props.inputName,
@@ -45,14 +45,18 @@ export class ProfileItem extends Block<ProfileItemProps> {
   render() {
     if (this.props.isSettings) {
       const template = Handlebars.compile(`
-        <p>${this.props.name}</p>
-        {{{input}}}
+        <div class=${s.profile__content_item}>
+          <p>${this.props.name}</p>
+          {{{input}}}
+        </div>
     `)
       return this.compile(template, this.props)
     } else {
       const template = Handlebars.compile(`
-        <p>${this.props.name}</p>
-        <p>${this.props.value ? this.props.value : ''}</p>
+        <div class=${s.profile__content_item}>
+          <p>${this.props.name}</p>
+          <p>${this.props.value ? this.props.value : ''}</p>
+        </div>
     `)
       return this.compile(template, this.props)
     }

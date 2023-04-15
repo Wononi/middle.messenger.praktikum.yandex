@@ -3,18 +3,18 @@ import Handlebars from 'handlebars';
 import s from './ChatFooter.module.scss';
 import {Input} from '../Input';
 import {Button} from '../Button/inedex';
+import controller from '../../controllers/MessagesController';
 
 interface ChatFooterProps {
-
+  id: number;
 }
 
 export class ChatFooter extends Block<ChatFooterProps> {
   constructor(props:ChatFooterProps) {
-    super('div', props);
+    super(props);
   }
 
   init() {
-    this.element?.classList.add(s.chat__footer);
     this.children.input = new Input({
       type: 'text',
       placeholder: 'Сообщение',
@@ -31,7 +31,10 @@ export class ChatFooter extends Block<ChatFooterProps> {
         click: (e) => {
           e.preventDefault();
           if (this.children.input.getContent().value !== '') {
-            console.log(this.children.input.getContent().value);
+            console.log();
+            let message = this.children.input.getContent().value
+            controller.sendMessage(this.props.id, message)
+            this.children.input.getContent().value = ''
           } else {
             console.log('Поле сообщение пусто');
           }
@@ -42,6 +45,7 @@ export class ChatFooter extends Block<ChatFooterProps> {
 
   render() {
     const template = Handlebars.compile(`
+      <div class=${s.chat__footer}>
       <svg id="chat__media" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" clip-rule="evenodd"
             d="M5.68222 11.9956L13.2584 4.4195L14.2012 5.3623L6.62503 12.9384L5.68222 11.9956Z" fill="#999999"/>
@@ -82,6 +86,7 @@ export class ChatFooter extends Block<ChatFooterProps> {
                     fill="black"/>
           </svg>
           <p>Локация</p>
+      </div>
       </div>
     `);
 
