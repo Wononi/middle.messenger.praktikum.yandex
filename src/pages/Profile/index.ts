@@ -67,7 +67,6 @@ class Profile extends Block<ProfileProps> {
   }
 
   protected componentDidUpdate(oldProps: ProfileProps, newProps: ProfileProps): boolean {
-    debugger
     (this.children.fields as ProfileItem[]).forEach((field, i) => {
       field.setProps({  value: newProps[userFields[i]] });
     });

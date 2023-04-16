@@ -1,0 +1,38 @@
+.chat__content {
+  align-self: end;
+  padding: 0 30px; }
+  .chat__content p.chat__content_date {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin-bottom: 50px; }
+  .chat__content .message {
+    background: #d9d9d9;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #000000;
+    width: max-content;
+    margin-bottom: 20px;
+    max-width: 50%; }
+  .chat__content .my_message {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    width: max-content;
+    margin-left: auto;
+    max-width: 50%; }
+
+/*# sourceMappingURL=ChatMessages.module.css.map */

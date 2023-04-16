@@ -1,0 +1,12 @@
+nav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); }
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px; }
+
+/*# sourceMappingURL=Navigation.module.css.map */

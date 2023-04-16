@@ -29,10 +29,13 @@ class SettingsItem extends Block<SettingsItemProps> {
   showPopup(e) {
     const popupAdd = document.querySelector('#addUser');
     const popupDelete = document.querySelector('#deleteUser');
+    const popupChatDelete = document.querySelector('#deleteChat');
     if (e.target.innerHTML === 'Добавить пользователя') {
       popupAdd.style.display = 'block'
-    } else {
+    } else if (e.target.innerHTML === 'Удалить пользователя') {
       popupDelete.style.display = 'block'
+    } else if (e.target.innerHTML === 'Удалить чат') {
+      popupChatDelete.style.display = 'block'
     }
   }
 
@@ -59,6 +62,9 @@ export class ChatSettings extends Block<ChatSettingsProps> {
     this.children.removeUser = new SettingsItem({
       label: 'Удалить пользователя'
     });
+    this.children.deleteChat = new SettingsItem({
+      label: 'Удалить чат'
+    });
   }
 
   show(e) {
@@ -79,6 +85,7 @@ export class ChatSettings extends Block<ChatSettingsProps> {
         <div class=${s.chatSettings} id="chatSettings">
             {{{addUser}}}
             {{{removeUser}}}
+            {{{deleteChat}}}
         </div>
         </div>
     `);

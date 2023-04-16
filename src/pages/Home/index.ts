@@ -7,11 +7,11 @@ import {Input} from '../../components/Input';
 import {ChatItem} from '../../components/ChatItem';
 import {withStore} from '../../utils/Store';
 import {Popup} from '../../components/Popup';
+import {ProfileItem} from '../../components/ProfileItem';
 
 interface HomeProps {
 
 }
-
 
 export class Home extends Block<HomeProps> {
   constructor(props: HomeProps) {
@@ -22,14 +22,10 @@ export class Home extends Block<HomeProps> {
   chatName;
 
   init() {
-    // debugger
     this.children.chatItems = Object.entries(this.props).map(item => {
-      if (window.location.pathname === '/messenger/' + item[1].id) {
-        this.id = item[1].id;
-        this.chatName = item[1].title;
-      }
       return new ChatItem({name: item[1].title, message: item[1].last_message, missMessage: item[1].unread_count, img: item[1].avatar, href: item[1].id});
     });
+    this.activeChat();
     this.children.profileLink = new SidebarItem({
       svg: `<svg width="73" height="73" viewBox="0 0 73 73" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="36.5" cy="24.5" r="17" stroke="black" stroke-width="3"/>
@@ -66,17 +62,21 @@ export class Home extends Block<HomeProps> {
     });
     this.children.chat = new ChatPage({
       chatName: this.chatName,
-      chatId: this.id
+      chatId: this.id,
     })
   }
 
+  activeChat () {
+    let result = (this.children.chatItems as ChatItem[]).some((item) => {
+      this.id = item.props.href;
+      this.chatName = item.props.name;
+      return '/messenger/' + item.props.href === window.location.pathname;
+    })
+    return result
+  }
+
   protected componentDidUpdate(oldProps: HomeProps, newProps: HomeProps): boolean {
-    // debugger
     this.children.chatItems = Object.entries(this.props).map(item => {
-      if (window.location.pathname === '/messenger/' + item[1].id) {
-        this.id = item[1].id;
-        this.chatName = item[1].title;
-      }
       return new ChatItem({name: item[1].title, message: item[1].last_message, missMessage: item[1].unread_count, img: item[1].avatar, href: item[1].id});
     });
     return true;
@@ -99,7 +99,12 @@ export class Home extends Block<HomeProps> {
               {{/each}}
           </div>
           <div class=${s.home__chat}>
-              ${this.id === null? `<p>Выберите чат, чтобы начать общение</p>` : `{{{chat}}}`}
+          {{#if ${this.activeChat()}
+          }} 
+            {{{chat}}}
+          {{else}}
+            <p>Выберите чат, чтобы начать общение</p>
+          {{/if}}
           </div>
         </div>
     `);

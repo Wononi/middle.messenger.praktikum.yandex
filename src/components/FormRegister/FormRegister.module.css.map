@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAK;EACH,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,WAAW,EAAE,MAAM;EAEnB,MAAE;IACA,UAAU,EAAE,MAAM;IAClB,WAAW,EAAE,GAAG;IAChB,SAAS,EAAE,IAAI;IACf,WAAW,EAAE,IAAI;IACjB,KAAK,EAAE,OAAO;IACd,aAAa,EAAE,GAAG;EAGpB,QAAI;IACF,KAAK,EAAE,IAAI",
+"sources": ["FormRegister.module.scss"],
+"names": [],
+"file": "FormRegister.module.css"
+}

@@ -1,0 +1,27 @@
+.profile__content_item {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  width: 990px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  margin-bottom: 20px; }
+  .profile__content_item p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 11px;
+    color: #000000; }
+  .profile__content_item input {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 11px;
+    color: #000000;
+    border-radius: 10px;
+    text-align: right;
+    padding-right: 5px;
+    width: max-content; }
+
+/*# sourceMappingURL=ProfileItem.module.css.map */

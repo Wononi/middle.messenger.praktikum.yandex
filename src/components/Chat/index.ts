@@ -37,27 +37,28 @@ class Chat extends Block<ChatProps> {
       title: 'Удалить пользователя',
       chatId: this.props.chatId,
     });
+    this.children.deleteChatPopup = new Popup({
+      type: 'deleteChat',
+      title: 'Удалить чат',
+      chatId: this.props.chatId,
+    });
     this.children.chatFooter = new ChatFooter({
       id: this.props.chatId
     });
   }
 
-  protected componentDidUpdate(oldProps: ChatProps, newProps: ChatProps): boolean {
-    console.log(newProps[this.props.chatId]);
-    if (newProps[this.props.chatId]) {
-      this.children.messages = newProps[this.props.chatId].map(message => {
-        return new ChatMessagesComp({message: message.content, idMessage: message.user_id})
-      })
-    }
-    return true
-  }
-
   render() {
+    if (this.props[this.props.chatId] && this.props[this.props.chatId].length > 0) {
+      this.children.messages = this.props[this.props.chatId].map(message => {
+        return new ChatMessagesComp({message: message.content, idMessage: message.user_id})
+      });
+    }
     // console.log(this.props[10287]);
     const template = Handlebars.compile(`
           <div class=${s.chat}>
             {{{adduserPopup}}}
             {{{deleteUserPopup}}}
+            {{{deleteChatPopup}}}
             {{{chatHeader}}}
             {{#each messages}}
                   {{{this}}}
@@ -70,7 +71,7 @@ class Chat extends Block<ChatProps> {
   }
 }
 
-const withUser = withStore((state) => ({ ...state.messages }))
+const withUser = withStore((state) => ({ ...state.messages, ...state.chats }))
 
 export const ChatPage = withUser(Chat);
 

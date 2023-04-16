@@ -47,7 +47,7 @@ export class Popup extends Block<PopupProps> {
     });
     this.children.removeUserInput = new Input({
       type: 'text',
-      name: 'addUser',
+      name: 'removeUser',
     });
     this.children.chatBtn = new Button({
       title: 'Добавить',
@@ -55,6 +55,9 @@ export class Popup extends Block<PopupProps> {
         click: (e) => {
           e.preventDefault();
           let title = (this.children.chatInput.getContent() as HTMLInputElement).value;
+          let test = document.createElement('div')
+          test.textContent = title
+          title = test.innerHTML;
           controller.create(title);
           (this.element as HTMLElement).style.display = 'none';
         }
@@ -66,6 +69,9 @@ export class Popup extends Block<PopupProps> {
         click: (e) => {
           e.preventDefault();
           let userId = (this.children.addUserInput.getContent() as HTMLInputElement).value;
+          let test = document.createElement('div')
+          test.textContent = userId
+          userId = test.innerHTML;
           controller.addUserToChat(this.props.chatId, userId);
           (this.element as HTMLElement).style.display = 'none';
         }
@@ -77,7 +83,20 @@ export class Popup extends Block<PopupProps> {
         click: (e) => {
           e.preventDefault();
           let userId = (this.children.addUserInput.getContent() as HTMLInputElement).value;
+          let test = document.createElement('div')
+          test.textContent = userId
+          userId = test.innerHTML;
           controller.deleteUserToChat(this.props.chatId, userId);
+          (this.element as HTMLElement).style.display = 'none';
+        }
+      }
+    });
+    this.children.deleteChatBtn = new Button({
+      title: 'Удалить',
+      events: {
+        click: (e) => {
+          e.preventDefault();
+          controller.delete(this.props.chatId);
           (this.element as HTMLElement).style.display = 'none';
         }
       }
@@ -133,12 +152,24 @@ export class Popup extends Block<PopupProps> {
                    {{{close}}}
                    <h4>${this.props.title}</h4>
                    <p>Имя пользователя</p>
-                   {{{addUserInput}}}
+                   {{{removeUserInput}}}
                    {{{removeUserBtn}}}
               </div>
             </div>
         `);
         return this.compile(template4, this.props);
+        break;
+      case 'deleteChat':
+        const template5 = Handlebars.compile(`
+            <div class=${s.popup} id="deleteChat">
+              <div class=${s.wrapper}>
+                   {{{close}}}
+                   <h4>${this.props.title}</h4>
+                   {{{deleteChatBtn}}}
+              </div>
+            </div>
+        `);
+        return this.compile(template5, this.props);
         break;
       default:
     }

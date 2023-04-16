@@ -13,8 +13,8 @@ class ChatsController {
 
   async create(title: string) {
     await this.api.create(title);
-
-    this.fetchChats();
+    await this.fetchChats();
+    location.reload();
   }
 
   async fetchChats() {
@@ -26,7 +26,7 @@ class ChatsController {
       await MessagesController.connect(chat.id, token);
     });
 
-    store.set('chats', chats);
+    await store.set('chats', chats);
   }
 
   addUserToChat(id: number, userId: number) {
@@ -39,8 +39,8 @@ class ChatsController {
 
   async delete(id: number) {
     await this.api.delete(id);
-
-    this.fetchChats();
+    await this.fetchChats();
+    Router.go('/messenger')
   }
 
   getToken(id: number) {

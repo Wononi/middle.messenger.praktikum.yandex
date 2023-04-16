@@ -33,6 +33,9 @@ export class ChatFooter extends Block<ChatFooterProps> {
           if (this.children.input.getContent().value !== '') {
             console.log();
             let message = this.children.input.getContent().value
+            let test = document.createElement('div')
+            test.textContent = message
+            message = test.innerHTML;
             controller.sendMessage(this.props.id, message)
             this.children.input.getContent().value = ''
           } else {

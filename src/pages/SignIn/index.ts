@@ -20,9 +20,17 @@ export class Sigin extends Block {
       events: {
         submit: (e) => {
           e.preventDefault();
+          let login = e.srcElement[0].value
+          let test = document.createElement('div')
+          test.textContent = login
+          login = test.innerHTML;
+          let password = e.srcElement[1].value
+          let test2 = document.createElement('div')
+          test2.textContent = password
+          password = test2.innerHTML;
           const signInObj = {
-            "login": e.srcElement[0].value,
-            "password": e.srcElement[1].value
+            "login": login,
+            "password": password
           }
           AuthController.signin(signInObj as SigninData);
         },
