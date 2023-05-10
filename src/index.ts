@@ -13,7 +13,7 @@ import AuthController from './controllers/AuthController';
 import controller from './controllers/ChatsController';
 import store from './utils/Store';
 
-const enum Routes {
+enum Routes {
   Index = '/',
   Register = '/sign-up',
   Profile = '/profile',

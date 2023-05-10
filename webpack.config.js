@@ -28,15 +28,27 @@ module.exports = {
     mode: 'development',
     // entry: ['./js/index.js', './js/animation-galaxy-sphere.js', './style/style.scss'],
     entry: {
-        index: './index.ts',
+        main: path.resolve(__dirname, './src/index.ts'),
     },
     output: {
         path: path.resolve(__dirname, './dist/'),
         filename: './js/bundle.[contenthash].js'
     },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'),
+            serveIndex: true,
+        },
+        magicHtml: true,
+        compress: true,
+        port: 3000
+    },
     optimization: optimization(),
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './index.html'), // шаблон
+            filename: 'index.html', // название выходного файла
+        }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: './css/style.[contenthash].css'
@@ -48,6 +60,12 @@ module.exports = {
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js', 'json'],
+        fallback: {
+            "fs": false
+        },
+        alias: {
+            'handlebars': path.resolve(__dirname, 'node_modules', 'handlebars', 'dist', 'handlebars.js'),
+        }
     },
     module: {
         rules: [
@@ -64,16 +82,11 @@ module.exports = {
                 ],
                 exclude: /(node_modules)/,
             },
-        ],
-        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader'],
-            },
-        ],
-        rules: [
-            {
+            },{
                 test: /\.s[ac]ss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -89,6 +102,7 @@ module.exports = {
                     'sass-loader',
                 ],
             },
+
         ],
     }
 };
