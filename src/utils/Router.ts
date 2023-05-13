@@ -1,6 +1,7 @@
 import {Block} from './Block';
 
 interface BlockConstructable<P = any> {
+    // @ts-ignore
     new(props: P): Block<P>;
 }
 
@@ -77,7 +78,7 @@ class Router {
             const target = event.currentTarget as Window;
 
             this._onRoute(target.location.pathname);
-        }
+        };
 
         this._onRoute(window.location.pathname);
     }

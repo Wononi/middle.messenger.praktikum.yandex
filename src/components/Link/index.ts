@@ -2,7 +2,6 @@ import {Block} from '../../utils/Block';
 import {PropsWithRouter, withRouter} from '../../hocs/withRouter';
 import Handlebars from 'handlebars';
 import s from './link.module.scss';
-import * as events from 'events';
 
 interface LinkProps extends PropsWithRouter {
   to: string;
@@ -14,24 +13,24 @@ interface LinkProps extends PropsWithRouter {
 }
 
 class BaseLink extends Block<LinkProps> {
-  constructor(props: LinkProps) {
-    super({
-      ...props,
-      events: {
-        click: () => this.navigate()
-      }}
-    );
-  }
+    constructor(props: LinkProps) {
+        super({
+            ...props,
+            events: {
+                click: () => this.navigate()
+            }}
+        );
+    }
 
-  navigate() {
-    this.props.router.go(this.props.to);
-  }
+    navigate() {
+        this.props.router.go(this.props.to);
+    }
 
-  render() {
-    const template = Handlebars.compile(`<span ${this.props.styleClass ? `class=${s.link, this.props.styleClass}` : `class=${s.link}`}>{{{label}}}</span>`);
+    render() {
+        const template = Handlebars.compile(`<span ${this.props.styleClass ? `class=${s.link, this.props.styleClass}` : `class=${s.link}`}>{{{label}}}</span>`);
 
-    return this.compile(template, this.props);
-  }
+        return this.compile(template, this.props);
+    }
 }
 
 export const Link = withRouter(BaseLink);

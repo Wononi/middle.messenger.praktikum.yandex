@@ -35,12 +35,7 @@ module.exports = {
         filename: './js/bundle.[contenthash].js'
     },
     devServer: {
-        static: {
-            directory: path.join(__dirname, 'dist'),
-            serveIndex: true,
-        },
-        magicHtml: true,
-        compress: true,
+        historyApiFallback: true,
         port: 3000
     },
     optimization: optimization(),
