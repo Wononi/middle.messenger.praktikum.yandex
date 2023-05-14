@@ -1,4 +1,3 @@
-import './style/index.scss';
 import { Sigin } from './pages/SignIn';
 import { SigUp } from './pages/SignUp';
 import {HomePage} from './pages/Home';
