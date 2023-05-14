@@ -13,6 +13,7 @@ export class Block<P extends Record<string, any> = any> {
 
     public id = nanoid(6);
     protected props: P;
+    // eslint-disable-next-line no-use-before-define
     public children: Record<string, Block | Block[]>;
     private eventBus: () => EventBus;
     private _element: HTMLElement | null = null;

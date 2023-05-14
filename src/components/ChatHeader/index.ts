@@ -10,16 +10,16 @@ interface ChatHeaderProps {
 }
 
 export class ChatHeader extends Block<ChatHeaderProps> {
-  constructor(props: ChatHeaderProps) {
-    super(props);
-  }
+    constructor(props: ChatHeaderProps) {
+        super(props);
+    }
 
-  init() {
-    this.children.settings = new ChatSettings({});
-  }
+    init() {
+        this.children.settings = new ChatSettings({});
+    }
 
-  render() {
-    const template = Handlebars.compile(`
+    render() {
+        const template = Handlebars.compile(`
         <div class=${s.chat__header}>
           <img src=${this.props.src} alt="profile">
           <p>${this.props.chatName}</p>
@@ -35,6 +35,6 @@ export class ChatHeader extends Block<ChatHeaderProps> {
         </div>
     `);
 
-    return this.compile(template, this.props);
-  }
+        return this.compile(template, this.props);
+    }
 }

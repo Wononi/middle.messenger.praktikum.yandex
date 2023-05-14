@@ -12,19 +12,19 @@ interface ButtonProps {
 }
 
 export class Button extends Block {
-  constructor(props: ButtonProps) {
-    super(props);
-  }
-
-  init() {
-    if (this.props.type) {
-      this.element?.setAttribute('type', this.props.type);
+    constructor(props: ButtonProps) {
+        super(props);
     }
-  }
 
-  render() {
-    const template = Handlebars.compile(`<button>${this.props.title}</button>`);
+    init() {
+        if (this.props.type) {
+            this.element?.setAttribute('type', this.props.type);
+        }
+    }
 
-    return this.compile(template, this.props);
-  }
+    render() {
+        const template = Handlebars.compile(`<button>${this.props.title}</button>`);
+
+        return this.compile(template, this.props);
+    }
 }

@@ -1,7 +1,7 @@
 import {Block} from '../../utils/Block';
 import Handlebars from 'handlebars';
 import {Avatar} from '../Avatar';
-import s from'./profileAvatar.module.scss'
+import s from'./profileAvatar.module.scss';
 
 interface ProfileAvatarProps {
   src: string,
@@ -12,26 +12,26 @@ interface ProfileAvatarProps {
 }
 
 export class ProfileAvatar extends Block<ProfileAvatarProps> {
-  constructor(props: ProfileAvatarProps) {
-    super(props);
-  }
+    constructor(props: ProfileAvatarProps) {
+        super(props);
+    }
 
-  init() {
-    this.children.img = new Avatar({
-      src: this.props.src
-    })
-  }
+    init() {
+        this.children.img = new Avatar({
+            src: this.props.src
+        });
+    }
 
-  render() {
-    if (this.props.isAvatar) {
-      const template = Handlebars.compile(`
+    render() {
+        if (this.props.isAvatar) {
+            const template = Handlebars.compile(`
         <div class=${s.avatar}>
             {{{img}}}
         </div>
-      `)
-      return this.compile(template, this.props)
-    } else {
-      const template = Handlebars.compile(`
+      `);
+            return this.compile(template, this.props);
+        } else {
+            const template = Handlebars.compile(`
         <div class=${s.avatar}>
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
@@ -39,8 +39,8 @@ export class ProfileAvatar extends Block<ProfileAvatarProps> {
                     fill="black" fill-opacity="0.5"/>
           </svg>
         </div>
-      `)
-      return this.compile(template, this.props)
+      `);
+            return this.compile(template, this.props);
+        }
     }
-  }
 }

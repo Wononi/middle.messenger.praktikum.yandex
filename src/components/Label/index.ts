@@ -8,17 +8,17 @@ interface LabelProps {
 }
 
 export class Label extends Block {
-  constructor(props: LabelProps) {
-    super(props);
-  }
+    constructor(props: LabelProps) {
+        super(props);
+    }
 
-  init() {
-    this.element?.setAttribute('for', this.props.for);
-  }
+    init() {
+        this.element?.setAttribute('for', this.props.for);
+    }
 
-  render() {
-    const template = Handlebars.compile(`<label class=${this.props.hide}>${this.props.label}</label>`);
+    render() {
+        const template = Handlebars.compile(`<label class=${this.props.hide}>${this.props.label}</label>`);
 
-    return this.compile(template, this.props);
-  }
+        return this.compile(template, this.props);
+    }
 }

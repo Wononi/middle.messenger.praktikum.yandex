@@ -51,6 +51,7 @@ class Route {
 }
 
 class Router {
+    // eslint-disable-next-line no-use-before-define
     private static __instance: Router;
     public routes: Route[] = [];
     private currentRoute: Route | null = null;

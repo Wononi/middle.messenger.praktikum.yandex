@@ -10,30 +10,30 @@ interface AvatarFormProps {
 }
 
 export class AvatarForm extends Block<AvatarFormProps> {
-  constructor(props: AvatarFormProps) {
-    super(props);
-  }
+    constructor(props: AvatarFormProps) {
+        super(props);
+    }
 
-  init() {
-    this.children.input = new Input({
-      type: 'file',
-      name: 'avatar',
-      accept: 'image/*'
-    })
-    this.children.avaBtn = new Button({
-      title: 'Поменять',
-      type: 'submit',
-    });
-  }
+    init() {
+        this.children.input = new Input({
+            type: 'file',
+            name: 'avatar',
+            accept: 'image/*'
+        });
+        this.children.avaBtn = new Button({
+            title: 'Поменять',
+            type: 'submit',
+        });
+    }
 
-  render() {
-    const template = Handlebars.compile(`
+    render() {
+        const template = Handlebars.compile(`
       <form>
         {{{input}}}
         {{{avaBtn}}}
       </form>
-    `)
+    `);
 
-    return this.compile(template, this.props);
-  }
+        return this.compile(template, this.props);
+    }
 }

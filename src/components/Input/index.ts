@@ -17,20 +17,20 @@ interface InputProps {
 }
 
 export class Input extends Block {
-  constructor(props: InputProps) {
-    super(props);
-  }
+    constructor(props: InputProps) {
+        super(props);
+    }
 
-  public getName() {
-    return (this.element as HTMLInputElement).name;
-  }
+    public getName() {
+        return (this.element as HTMLInputElement).name;
+    }
 
-  public getValue() {
-    return (this.element as HTMLInputElement).value;
-  }
+    public getValue() {
+        return (this.element as HTMLInputElement).value;
+    }
 
-  render() {
-    const template = Handlebars.compile(`
+    render() {
+        const template = Handlebars.compile(`
         <input type=${this.props.type} 
                ${this.props.name ? `name=${this.props.name}` : ""} 
                ${this.props.placeholder ? `placeholder=${this.props.placeholder}` : ""} 
@@ -40,6 +40,6 @@ export class Input extends Block {
         >
     `);
 
-    return this.compile(template, this.props);
-  }
+        return this.compile(template, this.props);
+    }
 }

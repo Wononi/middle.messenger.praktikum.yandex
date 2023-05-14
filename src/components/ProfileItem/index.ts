@@ -17,48 +17,48 @@ interface ProfileItemProps {
 }
 
 export class ProfileItem extends Block<ProfileItemProps> {
-  constructor(props: ProfileItemProps) {
-    super(props);
-  }
-
-  public getName() {
-    return (this.element as HTMLInputElement).name;
-  }
-
-  public getValue() {
-    return (this.element as HTMLInputElement).value;
-  }
-
-  init() {
-    if (this.props.isSettings) {
-      this.children.input = new Input({
-        name: this.props.inputName,
-        value: this.props.inputValue,
-        type: this.props.inputType,
-        events: {
-          blur: this.props.events.blur
-        },
-      })
+    constructor(props: ProfileItemProps) {
+        super(props);
     }
-  }
 
-  render() {
-    if (this.props.isSettings) {
-      const template = Handlebars.compile(`
+    public getName() {
+        return (this.element as HTMLInputElement).name;
+    }
+
+    public getValue() {
+        return (this.element as HTMLInputElement).value;
+    }
+
+    init() {
+        if (this.props.isSettings) {
+            this.children.input = new Input({
+                name: this.props.inputName,
+                value: this.props.inputValue,
+                type: this.props.inputType,
+                events: {
+                    blur: this.props.events.blur
+                },
+            });
+        }
+    }
+
+    render() {
+        if (this.props.isSettings) {
+            const template = Handlebars.compile(`
         <div class=${s.profile__content_item}>
           <p>${this.props.name}</p>
           {{{input}}}
         </div>
-    `)
-      return this.compile(template, this.props)
-    } else {
-      const template = Handlebars.compile(`
+    `);
+            return this.compile(template, this.props);
+        } else {
+            const template = Handlebars.compile(`
         <div class=${s.profile__content_item}>
           <p>${this.props.name}</p>
           <p>${this.props.value ? this.props.value : ''}</p>
         </div>
-    `)
-      return this.compile(template, this.props)
+    `);
+            return this.compile(template, this.props);
+        }
     }
-  }
 }

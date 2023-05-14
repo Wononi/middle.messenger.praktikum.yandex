@@ -23,153 +23,153 @@ const EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~
 const NAME_REGEXP = /^[a-zA-Zа-яА-Я'][a-zA-Zа-яА-Я-' ]+[a-zA-Zа-яА-Я']?$/u;
 const TEL_REGEXP = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
 const isEmailValid = (value) => {
-  return EMAIL_REGEXP.test(value);
+    return EMAIL_REGEXP.test(value);
 };
 const isNameValid = (value) => {
-  return NAME_REGEXP.test(value);
+    return NAME_REGEXP.test(value);
 };
 
 const isTelValid = (value) => {
-  return TEL_REGEXP.test(value);
+    return TEL_REGEXP.test(value);
 };
 
 const userFields = ['first_name', 'second_name', 'display_name', 'login', 'email', 'phone'] as Array<keyof SettingsProps>;
 
 class Settings extends Block<SettingsProps> {
-  constructor(props: SettingsProps) {
-    super(props);
-  }
+    constructor(props: SettingsProps) {
+        super(props);
+    }
 
-  init() {
-    this.children.email = new ProfileItem({
-      isSettings: true,
-      name: 'Почта',
-      inputName: 'email',
-      inputType: 'email',
-      inputValue: this.props.email,
-      events: {
-        blur: (e) => {
-          if (isEmailValid(e.target.value)) {
-            console.log('Email корректен');
-          } else {
-            alert('Не подходящий email')
-          }
-        },
-      },
-    });
-    this.children.login = new ProfileItem({
-      isSettings: true,
-      name: 'Логин',
-      inputName: 'login',
-      inputType: 'text',
-      inputValue: this.props.login,
-      events: {
-        blur: (e) => {
-          if (e.target.value < 3 || e.target.value > 20 || !/^[a-zA-z]{1}[a-zA-Z1-9]{3,20}$/.test(e.target.value)) {
-            alert('Логин введен не верно');
-          } else {
-            console.log('Login корректен');
-          }
-        },
-      },
-    });
-    this.children.firstName = new ProfileItem({
-      isSettings: true,
-      name: 'Имя',
-      inputName: 'first_name',
-      inputType: 'text',
-      inputValue: this.props.first_name,
-      events: {
-        blur: (e) => {
-          if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
-            alert('Имя введено не верно')
-          } else {
-            console.log('Имя корректно');
-          }
-        },
-      },
-    });
-    this.children.secondName = new ProfileItem({
-      isSettings: true,
-      name: 'Фамилия',
-      inputName: 'second_name',
-      inputType: 'text',
-      inputValue: this.props.second_name,
-      events: {
-        blur: (e) => {
-          if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
-            alert('Фамилия введено не верно')
-          } else {
-            console.log('Фамилия корректна');
-          }
-        },
-      },
-    });
-    this.children.name = new ProfileItem({
-      isSettings: true,
-      name: 'Имя в чате',
-      inputName: 'display_name',
-      inputType: 'text',
-      inputValue: this.props.display_name,
-      events: {
-        blur: (e) => {
-          if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
-            alert('Имя в чате введено не верно')
-          } else {
-            console.log('Имя в чате корректно');
-          }
-        },
-      },
-    });
-    this.children.phone = new ProfileItem({
-      isSettings: true,
-      name: 'Телефон',
-      inputName: 'phone',
-      inputType: 'tel',
-      inputValue: this.props.phone,
-      events: {
-        blur: (e) => {
-          if (isTelValid(e.target.value)) {
-            console.log('Телефон корректен');
-          } else {
-            alert('Телефон введен не верно');
-          }
-        },
-      },
-    });
-    this.children.button = new Button({
-      title: 'Сохранить',
-      type: 'submit',
-      events: {
-        click: (e) => {
-          e.preventDefault()
-          const values = Object
-            .values(this.children)
-            .filter(child => child instanceof ProfileItem)
-            .map((child) => ([(child.children.input as Input).getName(), (child.children.input as Input).getValue()]))
+    init() {
+        this.children.email = new ProfileItem({
+            isSettings: true,
+            name: 'Почта',
+            inputName: 'email',
+            inputType: 'email',
+            inputValue: this.props.email,
+            events: {
+                blur: (e) => {
+                    if (isEmailValid(e.target.value)) {
+                        console.log('Email корректен');
+                    } else {
+                        alert('Не подходящий email');
+                    }
+                },
+            },
+        });
+        this.children.login = new ProfileItem({
+            isSettings: true,
+            name: 'Логин',
+            inputName: 'login',
+            inputType: 'text',
+            inputValue: this.props.login,
+            events: {
+                blur: (e) => {
+                    if (e.target.value < 3 || e.target.value > 20 || !/^[a-zA-z]{1}[a-zA-Z1-9]{3,20}$/.test(e.target.value)) {
+                        alert('Логин введен не верно');
+                    } else {
+                        console.log('Login корректен');
+                    }
+                },
+            },
+        });
+        this.children.firstName = new ProfileItem({
+            isSettings: true,
+            name: 'Имя',
+            inputName: 'first_name',
+            inputType: 'text',
+            inputValue: this.props.first_name,
+            events: {
+                blur: (e) => {
+                    if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
+                        alert('Имя введено не верно');
+                    } else {
+                        console.log('Имя корректно');
+                    }
+                },
+            },
+        });
+        this.children.secondName = new ProfileItem({
+            isSettings: true,
+            name: 'Фамилия',
+            inputName: 'second_name',
+            inputType: 'text',
+            inputValue: this.props.second_name,
+            events: {
+                blur: (e) => {
+                    if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
+                        alert('Фамилия введено не верно');
+                    } else {
+                        console.log('Фамилия корректна');
+                    }
+                },
+            },
+        });
+        this.children.name = new ProfileItem({
+            isSettings: true,
+            name: 'Имя в чате',
+            inputName: 'display_name',
+            inputType: 'text',
+            inputValue: this.props.display_name,
+            events: {
+                blur: (e) => {
+                    if (!isNameValid(e.target.value) || e.target.value.charAt(0) !== e.target.value.charAt(0).toUpperCase()) {
+                        alert('Имя в чате введено не верно');
+                    } else {
+                        console.log('Имя в чате корректно');
+                    }
+                },
+            },
+        });
+        this.children.phone = new ProfileItem({
+            isSettings: true,
+            name: 'Телефон',
+            inputName: 'phone',
+            inputType: 'tel',
+            inputValue: this.props.phone,
+            events: {
+                blur: (e) => {
+                    if (isTelValid(e.target.value)) {
+                        console.log('Телефон корректен');
+                    } else {
+                        alert('Телефон введен не верно');
+                    }
+                },
+            },
+        });
+        this.children.button = new Button({
+            title: 'Сохранить',
+            type: 'submit',
+            events: {
+                click: (e) => {
+                    e.preventDefault();
+                    const values = Object
+                        .values(this.children)
+                        .filter(child => child instanceof ProfileItem)
+                        .map((child) => ([(child.children.input as Input).getName(), (child.children.input as Input).getValue()]));
 
-          const data = Object.fromEntries(values);
-          ProfileController.settings(data as SettingsData);
-        }
-      }
-    });
-    this.children.avatar = new ProfileAvatar({
-      src: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
-      isAvatar: true,
-      events: {
-        click: () => {
-          this.children.popup.getContent().style.display = 'block';
-        }
-      }
-    });
-    this.children.popup = new Popup({
-      title: 'Загрузите файл',
-      type: 'avatar'
-    });
-  }
+                    const data = Object.fromEntries(values);
+                    ProfileController.settings(data as SettingsData);
+                }
+            }
+        });
+        this.children.avatar = new ProfileAvatar({
+            src: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
+            isAvatar: true,
+            events: {
+                click: () => {
+                    this.children.popup.getContent().style.display = 'block';
+                }
+            }
+        });
+        this.children.popup = new Popup({
+            title: 'Загрузите файл',
+            type: 'avatar'
+        });
+    }
 
-  render() {
-    const template = Handlebars.compile(`
+    render() {
+        const template = Handlebars.compile(`
       <div class=${s.profile}>
         {{{popup}}}
         <div class=${s.profile__sidebar}>
@@ -193,11 +193,11 @@ class Settings extends Block<SettingsProps> {
             {{{button}}}
         </div>
       </div>
-    `)
-    return this.compile(template, this.props)
-  }
+    `);
+        return this.compile(template, this.props);
+    }
 }
 
-const withUser = withStore((state) => ({ ...state.user }))
+const withUser = withStore((state) => ({ ...state.user }));
 
 export const SettingsPage = withUser(Settings);

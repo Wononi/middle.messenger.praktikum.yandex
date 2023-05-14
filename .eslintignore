@@ -1,3 +1,5 @@
 /dist
 **/*.min.js
+*.scss
+*.svg
 /node_modules

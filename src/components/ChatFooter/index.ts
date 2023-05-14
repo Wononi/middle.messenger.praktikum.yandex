@@ -10,44 +10,44 @@ interface ChatFooterProps {
 }
 
 export class ChatFooter extends Block<ChatFooterProps> {
-  constructor(props:ChatFooterProps) {
-    super(props);
-  }
+    constructor(props:ChatFooterProps) {
+        super(props);
+    }
 
-  init() {
-    this.children.input = new Input({
-      type: 'text',
-      placeholder: 'Сообщение',
-      name: 'message',
-    });
-    this.children.button = new Button({
-      title: `<svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+    init() {
+        this.children.input = new Input({
+            type: 'text',
+            placeholder: 'Сообщение',
+            name: 'message',
+        });
+        this.children.button = new Button({
+            title: `<svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="14.5" cy="14.5" r="14.5" fill="black"/>
             <path d="M20.7071 15.7071C21.0976 15.3166 21.0976 14.6834 20.7071 14.2929L14.3431 7.92893C13.9526 7.53841 13.3195 7.53841 12.9289 7.92893C12.5384 8.31946 12.5384 8.95262 12.9289 9.34315L18.5858 15L12.9289 20.6569C12.5384 21.0474 12.5384 21.6805 12.9289 22.0711C13.3195 22.4616 13.9526 22.4616 14.3431 22.0711L20.7071 15.7071ZM9 16H20V14H9V16Z"
                   fill="white"/>
         </svg>`,
-      type: 'submit',
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          if (this.children.input.getContent().value !== '') {
-            console.log();
-            let message = this.children.input.getContent().value
-            let test = document.createElement('div')
-            test.textContent = message
-            message = test.innerHTML;
-            controller.sendMessage(this.props.id, message)
-            this.children.input.getContent().value = ''
-          } else {
-            console.log('Поле сообщение пусто');
-          }
-        },
-      },
-    });
-  }
+            type: 'submit',
+            events: {
+                click: (e) => {
+                    e.preventDefault();
+                    if (this.children.input.getContent().value !== '') {
+                        console.log();
+                        let message = this.children.input.getContent().value;
+                        const test = document.createElement('div');
+                        test.textContent = message;
+                        message = test.innerHTML;
+                        controller.sendMessage(this.props.id, message);
+                        this.children.input.getContent().value = '';
+                    } else {
+                        console.log('Поле сообщение пусто');
+                    }
+                },
+            },
+        });
+    }
 
-  render() {
-    const template = Handlebars.compile(`
+    render() {
+        const template = Handlebars.compile(`
       <div class=${s.chat__footer}>
       <svg id="chat__media" width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" clip-rule="evenodd"
@@ -93,6 +93,6 @@ export class ChatFooter extends Block<ChatFooterProps> {
       </div>
     `);
 
-    return this.compile(template, this.props);
-  }
+        return this.compile(template, this.props);
+    }
 }

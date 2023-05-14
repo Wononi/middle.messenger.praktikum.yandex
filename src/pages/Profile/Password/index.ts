@@ -13,65 +13,65 @@ import {Popup} from '../../../components/Popup';
 interface PasswordProps {}
 
 class Password extends Block<PasswordProps> {
-  constructor(props: PasswordProps) {
-    super(props);
-  }
+    constructor(props: PasswordProps) {
+        super(props);
+    }
 
-  init() {
-    this.children.oldPassword = new ProfileItem({
-      isSettings: true,
-      name: 'Старый пароль',
-      inputName: 'oldPassword',
-      inputType: 'password',
-      events: {
-        blur: () => {}
-      }
-    });
-    this.children.newPassword = new ProfileItem({
-      isSettings: true,
-      name: 'Новый пароль',
-      inputName: 'newPassword',
-      inputType: 'password',
-      events: {
-        blur: () => {}
-      }
-    });
-    this.children.button = new Button({
-      title: 'Сохранить',
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          const values = Object
-            .values(this.children)
-            .filter(child => child instanceof ProfileItem)
-            .map((child) => ([(child.children.input as Input).getName(), (child.children.input as Input).getValue()]))
-          const data = Object.fromEntries(values);
-          if (data.oldPassword === '' || data.newPassword === '') {
-            alert('Поля не могут быть пустыми');
-            throw new Error('поле пусто')
-          }
-          console.log(data);
-          ProfileController.password(data as SettingsData);
-        }
-      }
-    });
-    this.children.avatar = new ProfileAvatar({
-      src: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
-      isAvatar: true,
-      events: {
-        click: () => {
-          this.children.popup.getContent().style.display = 'block';
-        }
-      }
-    });
-    this.children.popup = new Popup({
-      title: 'Загрузите файл',
-      type: 'avatar'
-    });
-  }
+    init() {
+        this.children.oldPassword = new ProfileItem({
+            isSettings: true,
+            name: 'Старый пароль',
+            inputName: 'oldPassword',
+            inputType: 'password',
+            events: {
+                blur: () => {}
+            }
+        });
+        this.children.newPassword = new ProfileItem({
+            isSettings: true,
+            name: 'Новый пароль',
+            inputName: 'newPassword',
+            inputType: 'password',
+            events: {
+                blur: () => {}
+            }
+        });
+        this.children.button = new Button({
+            title: 'Сохранить',
+            events: {
+                click: (e) => {
+                    e.preventDefault();
+                    const values = Object
+                        .values(this.children)
+                        .filter(child => child instanceof ProfileItem)
+                        .map((child) => ([(child.children.input as Input).getName(), (child.children.input as Input).getValue()]));
+                    const data = Object.fromEntries(values);
+                    if (data.oldPassword === '' || data.newPassword === '') {
+                        alert('Поля не могут быть пустыми');
+                        throw new Error('поле пусто');
+                    }
+                    console.log(data);
+                    ProfileController.password(data as SettingsData);
+                }
+            }
+        });
+        this.children.avatar = new ProfileAvatar({
+            src: 'https://ya-praktikum.tech/api/v2/resources' + this.props.avatar,
+            isAvatar: true,
+            events: {
+                click: () => {
+                    this.children.popup.getContent().style.display = 'block';
+                }
+            }
+        });
+        this.children.popup = new Popup({
+            title: 'Загрузите файл',
+            type: 'avatar'
+        });
+    }
 
-  render() {
-    const template = Handlebars.compile(`
+    render() {
+        const template = Handlebars.compile(`
       <div class=${s.profile}>
         {{{popup}}}
         <div class=${s.profile__sidebar}>
@@ -91,11 +91,11 @@ class Password extends Block<PasswordProps> {
             {{{button}}}
         </div>
       </div>
-    `)
-    return this.compile(template, this.props)
-  }
+    `);
+        return this.compile(template, this.props);
+    }
 }
 
-const withUser = withStore((state) => ({ ...state.user }))
+const withUser = withStore((state) => ({ ...state.user }));
 
 export const PasswordPage = withUser(Password);

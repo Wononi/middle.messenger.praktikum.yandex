@@ -19,74 +19,74 @@ export interface Message {
 }
 
 class MessagesController {
-  private sockets: Map<number, WSTransport> = new Map();
+    private sockets: Map<number, WSTransport> = new Map();
 
-  async connect(id: number, token: string) {
-    if (this.sockets.has(id)) {
-      return;
-    }
-    const userId = store.getState().user.id;
+    async connect(id: number, token: string) {
+        if (this.sockets.has(id)) {
+            return;
+        }
+        const userId = store.getState().user.id;
 
-    const wsTransport = new WSTransport(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
+        const wsTransport = new WSTransport(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
 
-    this.sockets.set(id, wsTransport);
+        this.sockets.set(id, wsTransport);
 
-    await wsTransport.connect();
+        await wsTransport.connect();
 
-    this.subscribe(wsTransport, id);
-    this.fetchOldMessages(id);
-  }
-
-  sendMessage(id: number, message: string) {
-    const socket = this.sockets.get(id);
-
-    if (!socket) {
-      throw new Error(`Chat ${id} is not connected`);
+        this.subscribe(wsTransport, id);
+        this.fetchOldMessages(id);
     }
 
-    socket.send({
-      type: 'message',
-      content: message,
-    });
-  }
+    sendMessage(id: number, message: string) {
+        const socket = this.sockets.get(id);
 
-  fetchOldMessages(id: number) {
-    const socket = this.sockets.get(id);
+        if (!socket) {
+            throw new Error(`Chat ${id} is not connected`);
+        }
 
-    if (!socket) {
-      throw new Error(`Chat ${id} is not connected`);
-    }
-    socket.send({type: 'get old', content: '0'});
-  }
-
-  closeAll() {
-    Array.from(this.sockets.values()).forEach(socket => socket.close());
-  }
-
-  private onMessage(id: number, messages: Message | Message[]) {
-    let messagesToAdd: Message[] = [];
-
-    if (Array.isArray(messages)) {
-      messagesToAdd = messages.reverse();
-    } else {
-      messagesToAdd.push(messages);
+        socket.send({
+            type: 'message',
+            content: message,
+        });
     }
 
-    const currentMessages = (store.getState().messages || {})[id] || [];
+    fetchOldMessages(id: number) {
+        const socket = this.sockets.get(id);
 
-    messagesToAdd = [...currentMessages, ...messagesToAdd];
+        if (!socket) {
+            throw new Error(`Chat ${id} is not connected`);
+        }
+        socket.send({type: 'get old', content: '0'});
+    }
 
-    store.set(`messages.${id}`, messagesToAdd);
-  }
+    closeAll() {
+        Array.from(this.sockets.values()).forEach(socket => socket.close());
+    }
 
-  private onClose(id: number) {
-    this.sockets.delete(id);
-  }
+    private onMessage(id: number, messages: Message | Message[]) {
+        let messagesToAdd: Message[] = [];
 
-  private subscribe(transport: WSTransport, id: number) {
-    transport.on(WSTransportEvents.Message, (message) => this.onMessage(id, message));
-    transport.on(WSTransportEvents.Close, () => this.onClose(id));
-  }
+        if (Array.isArray(messages)) {
+            messagesToAdd = messages.reverse();
+        } else {
+            messagesToAdd.push(messages);
+        }
+
+        const currentMessages = (store.getState().messages || {})[id] || [];
+
+        messagesToAdd = [...currentMessages, ...messagesToAdd];
+
+        store.set(`messages.${id}`, messagesToAdd);
+    }
+
+    private onClose(id: number) {
+        this.sockets.delete(id);
+    }
+
+    private subscribe(transport: WSTransport, id: number) {
+        transport.on(WSTransportEvents.Message, (message) => this.onMessage(id, message));
+        transport.on(WSTransportEvents.Close, () => this.onClose(id));
+    }
 }
 
 

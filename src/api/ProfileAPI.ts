@@ -16,26 +16,26 @@ export interface PasswordData {
 
 
 export class ProfileAPI extends BaseAPI {
-  constructor() {
-    super('/user');
-  }
+    constructor() {
+        super('/user');
+    }
 
-  settings(data: SettingsData) {
-    return this.http.put('/profile', data)
-  }
+    settings(data: SettingsData) {
+        return this.http.put('/profile', data);
+    }
 
-  password(data: PasswordData) {
-    return this.http.put('/password', data)
-  }
+    password(data: PasswordData) {
+        return this.http.put('/password', data);
+    }
 
-  avatar(data: any) {
-    return this.http.put('/profile/avatar', data)
-  }
+    avatar(data: any) {
+        return this.http.put('/profile/avatar', data);
+    }
 
-  create = undefined;
-  update = undefined;
-  delete = undefined;
-  read = undefined;
+    create = undefined;
+    update = undefined;
+    delete = undefined;
+    read = undefined;
 }
 
-export default new ProfileAPI()
+export default new ProfileAPI();
